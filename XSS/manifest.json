@@ -1,0 +1,33 @@
+{
+  "name": "XSS",
+  "description": "Development tools",
+  "version": "1.0",
+  "manifest_version": 2,
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "browser_action": {
+    "default_title": "XSS",
+    "default_popup": "GUI.html",
+    "default_icon": "icon16.png"
+  },
+  "permissions": [
+    "activeTab",
+    "notifications",
+    "tabs",
+    "webNavigation",
+    "contextMenus",
+    "storage"
+  ],
+  "web_accessible_resources": ["broswer/xss-helper.js"],
+  "content_scripts" : [{
+    "matches" : ["*://*/*"],
+    "js" : ["extension/content.js"]
+  }],
+  "background": {
+    "scripts": ["extension/background.js"],
+    "persistent": false
+  }
+}

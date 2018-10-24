@@ -1,0 +1,45 @@
+{
+  "name": "XSS",
+  "version": "1.0.0",
+  "description": "Development tools",
+  "main": "index.js",
+  "scripts": {
+    "dev": "webpack --mode development -w --devtool source-map",
+    "build": "yarn del & webpack --mode production",
+    "del": "del ./XSS/broswer ./XSS/extension"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/totofish/XSS.git"
+  },
+  "keywords": [
+    "XSS"
+  ],
+  "author": "totofish",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/totofish/XSS/issues"
+  },
+  "homepage": "https://github.com/totofish/XSS#readme",
+  "devDependencies": {
+    "@babel/core": "^7.1.2",
+    "@babel/plugin-proposal-class-properties": "^7.1.0",
+    "@babel/preset-env": "^7.1.0",
+    "@babel/preset-react": "^7.0.0",
+    "autoprefixer": "^9.1.5",
+    "babel-loader": "^8.0.4",
+    "css-loader": "^1.0.0",
+    "del-cli": "^1.1.0",
+    "js-beautify": "^1.8.8",
+    "mini-css-extract-plugin": "^0.4.3",
+    "node-sass": "^4.9.3",
+    "postcss-loader": "^3.0.0",
+    "prop-types": "^15.6.2",
+    "react": "^16.5.2",
+    "react-dom": "^16.5.2",
+    "sass-loader": "^7.1.0",
+    "webpack": "^4.20.2",
+    "webpack-cli": "^3.1.2"
+  },
+  "dependencies": {}
+}

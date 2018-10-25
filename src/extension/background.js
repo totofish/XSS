@@ -49,36 +49,32 @@ chrome.runtime.onInstalled.addListener(function() {
   const script1 = {
     title: 'Inject Jquery',
     code: js(`
-      (function() {
-        var script = document.createElement('script');
-        document.getElementsByTagName("body")[0].appendChild(script);
-        script.src = 'https://code.jquery.com/jquery-3.3.1.min.js';
-      })();
+      var script = document.createElement('script');
+      document.getElementsByTagName("body")[0].appendChild(script);
+      script.src = 'https://code.jquery.com/jquery-3.3.1.min.js';
     `, { indent_size: 2 }),
   }
   const script2 = {
     title: 'Get Cookie',
     code: js(`
-      (function() {
-        function getCookie() {
-          if (document.cookie.length > 0) {
-            const cookies = document.cookie.split(';');
-            if (cookies.length > 0) {
-              return cookies.reduce((obj, text) => {
-                const fragment = text.split('=');
-                if (fragment.length > 1) {
-                  return Object.assign(obj, {
-                    [fragment[0]]: unescape(fragment.splice(1).join('')),
-                  });
-                }
-                return obj;
-              }, {});
-            }
+      function getCookie() {
+        if (document.cookie.length > 0) {
+          const cookies = document.cookie.split(';');
+          if (cookies.length > 0) {
+            return cookies.reduce((obj, text) => {
+              const fragment = text.split('=');
+              if (fragment.length > 1) {
+                return Object.assign(obj, {
+                  [fragment[0]]: unescape(fragment.splice(1).join('')),
+                });
+              }
+              return obj;
+            }, {});
           }
-          return {};
         }
-        alert(JSON.stringify(getCookie(), null, 2));
-      })();
+        return {};
+      }
+      alert(JSON.stringify(getCookie(), null, 2));
     `, {}),
   }
   chrome.storage.local.set({ script1, script2 });

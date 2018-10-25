@@ -8,7 +8,11 @@ chrome.runtime.onMessage.addListener((data, sender, sendResponse) => {
       break;
     case 'emitCode':
       // 執行自訂 script
-      window.eval(data.code);
+      window.eval(`
+        (function() {
+          ${data.code}
+        })();
+      `);
       sendResponse('ok');
       break;
     default:

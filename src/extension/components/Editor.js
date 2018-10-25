@@ -1,5 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Controlled as CodeMirror } from 'react-codemirror2';
+import 'codemirror/lib/codemirror.css';
+import 'codemirror/theme/neo.css';
+import 'codemirror/mode/javascript/javascript';
 
 export default class Editor extends React.Component {
   constructor(props) {
@@ -39,14 +43,19 @@ export default class Editor extends React.Component {
     });
   }
 
-  handleCodeChange = (event) => {
+  handleCodeChange = (editor, data, value) => {
     this.setState({
-      code: event.target.value,
+      code: value,
     });
   }
 
   render() {
     const { title, code } = this.state;
+    const options = {
+      lineNumbers: false,
+      mode: 'javascript',
+      theme: 'neo',
+    };
     return (
       <div className="editor">
         <input
@@ -61,12 +70,11 @@ export default class Editor extends React.Component {
           <button type="button" className="red" onClick={this.handleSave}>Save</button>
           <button type="button" className="gray" onClick={this.handleClear}>Clear</button>
         </div>
-        <textarea
+        <CodeMirror
           className="textarea-script"
-          rows="10"
-          cols="50"
           value={code}
-          onChange={this.handleCodeChange}
+          onBeforeChange={this.handleCodeChange}
+          options={options}
         />
       </div>
     );

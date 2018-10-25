@@ -1,6 +1,6 @@
 {
   "name": "XSS",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Development tools",
   "main": "index.js",
   "scripts": {
@@ -28,6 +28,7 @@
     "@babel/preset-react": "^7.0.0",
     "autoprefixer": "^9.1.5",
     "babel-loader": "^8.0.4",
+    "codemirror": "^5.41.0",
     "css-loader": "^1.0.0",
     "del-cli": "^1.1.0",
     "js-beautify": "^1.8.8",
@@ -36,6 +37,7 @@
     "postcss-loader": "^3.0.0",
     "prop-types": "^15.6.2",
     "react": "^16.5.2",
+    "react-codemirror2": "^5.1.0",
     "react-dom": "^16.5.2",
     "sass-loader": "^7.1.0",
     "webpack": "^4.20.2",

@@ -6,6 +6,7 @@ $shadow: 1px 1px 0 #FFFFFF;
 $transition-time: 0.25s;
 $btn-color-red: #F32038;
 $btn-color-gray: #9B9B9B;
+$selection-color: rgba($color-red, 0.15);
 
 html,
 body {
@@ -15,15 +16,13 @@ body {
   margin: 0;
   background-color: $color-bg;
   -webkit-font-smoothing: antialiased;
+  font-family: "PingFangTC-Regular", "Heiti Regular", sans-serif;
+  font-weight: 200;
 }
 
 * {
-  font-family: "PingFangTC-Regular", "Heiti Regular", sans-serif;
-  color: #000000;
-  font-weight: 200;
-
   &::selection {
-    background-color: rgba($color-red, 0.15);
+    background-color: $selection-color;
   }
 }
 
@@ -45,6 +44,8 @@ textarea {
 
 input {
   height: 26px;
+  font-size: 14px;
+  font-weight: 200;
 }
 
 label {
@@ -90,7 +91,7 @@ footer {
   transition: $transition-time;
 
   .script-title {
-    width: 133px - 2;
+    width: 133px - 2 - 10;
     position: absolute;
     pointer-events: none;
     color: #F5A623;
@@ -100,6 +101,8 @@ footer {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    font-weight: 700;
+    padding: 0 5px;
   }
 
   .codeIcon {
@@ -180,10 +183,25 @@ footer {
 .textarea-script {
   width: 439px;
   height: 244px;
-  min-width: 439px;
-  max-width: 439px;
-  min-height: 244px;
-  max-height: 244px;
+
+  .CodeMirror-vscrollbar,
+  .CodeMirror-hscrollbar {
+    outline: none;
+  }
+
+  .CodeMirror {
+    height: 244px;
+    border: 1px solid $color-line;
+    box-shadow: inset 0 1px 3px 0 rgba(0,0,0,0.09);
+    border-radius: 2px;
+    padding: 0 6px;
+  }
+  .CodeMirror-focused .CodeMirror-selected,
+  .CodeMirror-line::selection,
+  .CodeMirror-line > span::selection,
+  .CodeMirror-line > span > span::selection {
+    background: $selection-color !important;
+  }
 }
 
 .btns {
@@ -198,7 +216,7 @@ button {
   border-radius: 2px;
   outline: none;
   cursor: pointer;
-  font-weight: 900;
+  font-weight: 500;
   font-size: 14px;
   transition: $transition-time;
 

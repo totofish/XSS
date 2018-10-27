@@ -75,7 +75,7 @@ chrome.runtime.onInstalled.addListener(function() {
         return {};
       }
       alert(JSON.stringify(getCookie(), null, 2));
-    `, {}),
+    `, { indent_size: 2 }),
   }
   chrome.storage.local.set({ script1, script2 });
 });

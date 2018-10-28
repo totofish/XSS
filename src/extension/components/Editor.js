@@ -30,11 +30,19 @@ export default class Editor extends React.Component {
     if (onSubmit) onSubmit(data);
   }
 
-  handleClear = () => {
-    this.setState({
+  handleCancel = () => {
+    const { onSubmit } = this.props;
+    if (onSubmit) onSubmit(null);
+  }
+
+  handleDel = () => {
+    const data = {
       title: '',
       code: '',
-    });
+    }
+    this.setState(data);
+    const { onSubmit } = this.props;
+    if (onSubmit) onSubmit(data);
   }
 
   handleTitleChange = (event) => {
@@ -67,8 +75,13 @@ export default class Editor extends React.Component {
           onChange={this.handleTitleChange}
         />
         <div className="btns">
+          <button type="button" className="del" alt="del" title="del" onClick={this.handleDel}>
+            <svg width="26px" height="26px">
+              <use xlinkHref="../imgs/del.svg#del" />
+            </svg>
+          </button>
           <button type="button" className="red" onClick={this.handleSave}>Save</button>
-          <button type="button" className="gray" onClick={this.handleClear}>Clear</button>
+          <button type="button" className="gray" onClick={this.handleCancel}>Cancel</button>
         </div>
         <CodeMirror
           className="textarea-script"

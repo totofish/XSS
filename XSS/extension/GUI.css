@@ -616,7 +616,7 @@ footer {
       opacity: 1; }
 
 .input-title {
-  width: 265px;
+  width: 228px;
   height: 26px;
   margin-bottom: 10px;
   display: inline-block; }
@@ -647,7 +647,9 @@ footer {
 
 .btns {
   position: absolute;
-  display: inline-block; }
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex; }
 
 button {
   margin-left: 10px;
@@ -672,4 +674,13 @@ button {
     button.gray:hover {
       background-color: #9B9B9B;
       color: white; }
+  button.del {
+    width: 26px;
+    height: 26px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    fill: #DADADA; }
+    button.del:hover {
+      fill: #F32038; }
 

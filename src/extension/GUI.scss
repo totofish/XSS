@@ -174,7 +174,7 @@ footer {
 }
 
 .input-title {
-  width: 265px;
+  width: 228px;
   height: 26px;
   margin-bottom: 10px;
   display: inline-block;
@@ -206,7 +206,7 @@ footer {
 
 .btns {
   position: absolute;
-  display: inline-block;
+  display: inline-flex;
 }
 
 button {
@@ -237,6 +237,19 @@ button {
     &:hover {
       background-color: $btn-color-gray;
       color: white;
+    }
+  }
+
+  &.del {
+    width: 26px;
+    height: 26px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    fill: $color-line;
+
+    &:hover {
+      fill: $btn-color-red;
     }
   }
 }

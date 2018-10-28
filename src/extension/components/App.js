@@ -36,6 +36,14 @@ export default class App extends React.Component {
   handleEditor = (value) => {
     const { editorTarget } = this.state;
     const { onSave } = this.props;
+    if (value === null) {
+      // cancel
+      this.setState({
+        stage: 'list',
+        editorTarget: null,
+      });
+      return;
+    }
     if (onSave) onSave(editorTarget, value);
     this.setState({
       [editorTarget]: value,

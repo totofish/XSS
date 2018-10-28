@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="26px" height="26px" viewBox="0 0 26 26" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <symbol id="del" viewBox="0 0 26 26" width="26px" height="26px">
+        <g>
+            <path d="M7,20 C7,21.1 7.9,22 9,22 L17,22 C18.1,22 19,21.1 19,20 L19,8 L7,8 L7,20 Z M9.46,12.88 L10.87,11.47 L13,13.59 L15.12,11.47 L16.53,12.88 L14.41,15 L16.53,17.12 L15.12,18.53 L13,16.41 L10.88,18.53 L9.47,17.12 L11.59,15 L9.46,12.88 Z M16.5,5 L15.5,4 L10.5,4 L9.5,5 L6,5 L6,7 L20,7 L20,5 L16.5,5 Z"></path>
+        </g>
+    </symbol>
+</svg>

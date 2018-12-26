@@ -10,7 +10,12 @@
 
 未上至 Chrome 線上應用程式商店，所以請下載 <a href="XSS.crx" target="_blank">XSS.crx</a> 後，開啟 `chrome://extensions/` 頁面後將 XSS.crx 拖進頁面中安裝。
 
+## Export and Import Scripts
+
+對外掛小圖示按右鍵選擇 `Export Scripts` 會將目前所有 Scripts 下載為 `scripts.json`，可讓別人將檔案 Drag 進 XSS 開啟的視窗介面 import 便能匯入 Ｓcripts。
+
 ## Extension
 
 <img width="469" src="docs/GUI.png">
 <img width="469" src="docs/Editor.png">
+<img width="469" src="docs/Drop.png">

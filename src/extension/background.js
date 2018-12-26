@@ -29,6 +29,34 @@ const updateIcon = () => {
   });
 };
 
+// 導出所有腳本
+function exportScripts() {
+  chrome.storage.local.get([
+    'script1',
+    'script2',
+    'script3',
+    'script4',
+    'script5',
+    'script6',
+    'script7',
+    'script8',
+    'script9',
+  ], (result) => {
+    const scriptsData = JSON.stringify(result);
+    // Save as file
+    var url = 'data:application/json;base64,' + btoa(scriptsData);
+    chrome.downloads.download({
+        url,
+        filename: 'scripts.json'
+    });
+  });
+}
+
+// 匯入腳本
+function importScripts() {
+  console.log(chrome);
+}
+
 // 頁籤更新
 chrome.tabs.onUpdated.addListener(() => {
   clearTimeout(timeOutId);
@@ -41,8 +69,13 @@ chrome.tabs.onSelectionChanged.addListener(updateIcon);
 // 主選單設置 - 外掛安裝時
 chrome.runtime.onInstalled.addListener(function() {
   chrome.contextMenus.create({
-    id: 'xss-contextMenus',
+    id: 'about-xss',
     title: "About XSS",
+    contexts:['browser_action']
+  });
+  chrome.contextMenus.create({
+    id: 'export-scripts',
+    title: "Export Scripts",
     contexts:['browser_action']
   });
   // 塞入預設 script example
@@ -82,10 +115,12 @@ chrome.runtime.onInstalled.addListener(function() {
 
 // 點擊自訂選單時
 chrome.contextMenus.onClicked.addListener((info, tab) => {
-  if (info.menuItemId == 'xss-contextMenus') {
+  if (info.menuItemId === 'about-xss') {
     chrome.tabs.create({
       url: 'https://github.com/totofish/XSS'
     });
+  } else if (info.menuItemId === 'export-scripts') {
+    exportScripts();
   }
 });
 

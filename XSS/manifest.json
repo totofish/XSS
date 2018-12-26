@@ -1,7 +1,7 @@
 {
   "name": "XSS",
   "description": "Development tools",
-  "version": "1.0",
+  "version": "1.1.0",
   "manifest_version": 2,
   "icons": {
     "16": "icon16.png",
@@ -19,7 +19,8 @@
     "tabs",
     "webNavigation",
     "contextMenus",
-    "storage"
+    "storage",
+    "downloads"
   ],
   "web_accessible_resources": ["broswer/xss-helper.js"],
   "content_scripts" : [{

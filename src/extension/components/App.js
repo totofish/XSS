@@ -33,6 +33,20 @@ export default class App extends React.Component {
     if (onEmitCode) onEmitCode(this.state[scriptName].code);
   }
 
+  handleImportScripts = (data) => {
+    const { onSave } = this.props;
+    const scriptRange = ['script1', 'script2', 'script3', 'script4', 'script5', 'script6', 'script7', 'script8', 'script9'];
+    Object.keys(data).forEach(key => {
+      if (scriptRange.includes(key)) {
+        const value = data[key];
+        if (onSave) onSave(key, value);
+        this.setState({
+          [key]: value,
+        });
+      }
+    })
+  }
+
   handleEditor = (value) => {
     const { editorTarget } = this.state;
     const { onSave } = this.props;
@@ -58,7 +72,7 @@ export default class App extends React.Component {
       <>
         {
           stage === 'list'
-            ? <List {...scripts} onSet={this.handleSet} onEmitCode={this.handleEmitCode} />
+            ? <List {...scripts} onSet={this.handleSet} onEmitCode={this.handleEmitCode} onImportScripts={this.handleImportScripts} />
             : <Editor onSubmit={this.handleEditor} scriptData={scripts[editorTarget]} />
         }
       </>

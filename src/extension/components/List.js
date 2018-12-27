@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ScriptItem from './ScriptItem';
+import { Base64 } from 'js-base64';
 
 export default class List extends React.Component {
   constructor() {
@@ -22,7 +23,7 @@ export default class List extends React.Component {
         if (/.json$/i.test(file.name)) {
           const reader = new FileReader();
           reader.onloadend = () => {
-            const scripts = atob(reader.result.replace('data:application/json;base64,', ''));
+            const scripts = Base64.decode(reader.result.replace('data:application/json;base64,', ''));
             this.props.onImportScripts(JSON.parse(scripts));
           }
           reader.readAsDataURL(file);

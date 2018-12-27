@@ -1,4 +1,5 @@
 import { js } from 'js-beautify';
+import { Base64 } from 'js-base64';
 
 /**
  * 外掛常駐背景程式
@@ -44,17 +45,12 @@ function exportScripts() {
   ], (result) => {
     const scriptsData = JSON.stringify(result);
     // Save as file
-    var url = 'data:application/json;base64,' + btoa(scriptsData);
+    const url = `data:application/json;base64,${Base64.encode(scriptsData)}`;
     chrome.downloads.download({
-        url,
-        filename: 'scripts.json'
+      url,
+      filename: 'scripts.json'
     });
   });
-}
-
-// 匯入腳本
-function importScripts() {
-  console.log(chrome);
 }
 
 // 頁籤更新
@@ -110,7 +106,13 @@ chrome.runtime.onInstalled.addListener(function() {
       alert(JSON.stringify(getCookie(), null, 2));
     `, { indent_size: 2 }),
   }
-  chrome.storage.local.set({ script1, script2 });
+  chrome.storage.local.get([
+    'script1',
+    'script2',
+  ], (result) => {
+    if (!result['script1'] || (!result['script1'].title && !result['script1'].code)) chrome.storage.local.set({ script1 });
+    if (!result['script2'] || (!result['script2'].title && !result['script2'].code)) chrome.storage.local.set({ script2 });
+  });
 });
 
 // 點擊自訂選單時

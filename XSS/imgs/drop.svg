@@ -4,7 +4,7 @@
     <title>drop</title>
     <desc>Created with Sketch.</desc>
     <defs>
-        <rect id="path-1" x="10" y="10" width="449" height="328" rx="10"></rect>
+        <rect id="path-1" x="10" y="10" width="449" height="328" rx="20"></rect>
         <mask id="mask-2" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="449" height="328" fill="white">
             <use xlink:href="#path-1"></use>
         </mask>

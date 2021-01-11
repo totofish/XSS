@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="23px" height="23px" viewBox="0 0 23 23" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.5 (67469) - http://www.bohemiancoding.com/sketch -->
+    <title>add_circle_outline-24px</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="GUI" transform="translate(-71.000000, -144.000000)">
+            <g id="add_circle_outline-24px" transform="translate(69.000000, 142.000000)">
+                <polygon id="Path" points="0 0 26 0 26 26 0 26"></polygon>
+                <path d="M14.503125,7.921875 L12.309375,7.921875 L12.309375,12.309375 L7.921875,12.309375 L7.921875,14.503125 L12.309375,14.503125 L12.309375,18.890625 L14.503125,18.890625 L14.503125,14.503125 L18.890625,14.503125 L18.890625,12.309375 L14.503125,12.309375 L14.503125,7.921875 Z M13.40625,2.4375 C7.3515,2.4375 2.4375,7.3515 2.4375,13.40625 C2.4375,19.461 7.3515,24.375 13.40625,24.375 C19.461,24.375 24.375,19.461 24.375,13.40625 C24.375,7.3515 19.461,2.4375 13.40625,2.4375 Z M13.40625,22.18125 C8.56903125,22.18125 4.63125,18.2434688 4.63125,13.40625 C4.63125,8.56903125 8.56903125,4.63125 13.40625,4.63125 C18.2434688,4.63125 22.18125,8.56903125 22.18125,13.40625 C22.18125,18.2434688 18.2434688,22.18125 13.40625,22.18125 Z" id="Shape" fill="#D0021B" fill-rule="nonzero"></path>
+            </g>
+        </g>
+    </g>
+</svg>

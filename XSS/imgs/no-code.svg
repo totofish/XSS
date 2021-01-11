@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="19px" height="10px" viewBox="0 0 19 10" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.5 (67469) - http://www.bohemiancoding.com/sketch -->
+    <title>no script</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="none-script" transform="translate(-105.000000, -8.000000)" fill="#D0021B">
+            <g id="no-script" transform="translate(105.000000, 8.000000)">
+                <g id="Group-2" fill-opacity="0.500962409">
+                    <g id="Group">
+                        <polygon id="Path" points="12.5 8.5 14 10 19 5 14 -5.32907052e-15 12.5 1.5 16 5"></polygon>
+                        <polygon id="Path" points="6.5 1.5 5 -5.32907052e-15 -2.22044605e-15 5 5 10 6.5 8.5 3 5"></polygon>
+                    </g>
+                </g>
+                <g id="Group-3" opacity="0.5" transform="translate(8.500000, 0.000000)" fill-rule="nonzero">
+                    <polygon id="Path" points="0 8 2 8 2 10 0 10"></polygon>
+                    <polygon id="Path" points="0 0 2 0 2 6 0 6"></polygon>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,19 +1,36 @@
 const path = require('path');
+const TerserPlugin = require("terser-webpack-plugin");
 const MiniCSSExtractPlugin = require('mini-css-extract-plugin');
 const autoprefixer = require('autoprefixer');
 
 module.exports = {
   entry: {
-    'broswer/xss-helper': './src/broswer/xss-helper.js',
-    'extension/content': './src/extension/content.js',
-    'extension/GUI': './src/extension/GUI.js',
-    'extension/background': './src/extension/background.js',
+    'extension/content': './src/extension/content.ts',
+    'extension/GUI': './src/extension/GUI.tsx',
+    'extension/background': './src/extension/background.ts',
   },
   output: {
     filename: '[name].js',
     path: path.resolve(__dirname, 'XSS')
   },
+  optimization: {
+    minimize: true,
+    minimizer: [
+      new TerserPlugin({
+        terserOptions: {
+          format: {
+            comments: false,
+          },
+        },
+        extractComments: false,
+      }),
+    ],
+  },
   devtool: false, //'source-map',
+  resolve: {
+    extensions: [ '.tsx', '.ts', '.js', '.jsx', '.json', '.css', '.scss' ],
+    modules: ['node_modules'],
+  },
   module: {
     rules: [
       {
@@ -23,19 +40,20 @@ module.exports = {
           {
             loader: 'css-loader',
             options: {
-              minimize: true,
               sourceMap: true
             },
           }, {
             loader: 'postcss-loader',
             options: {
-              ident: 'postcss',
               sourceMap: true,
-              plugins: () => [
-                autoprefixer({
-                  browsers: ['last 2 versions']
-                }),
-              ],
+              postcssOptions: {
+                plugins: [
+                  [
+                    "autoprefixer",
+                    { overrideBrowserslist: ['last 2 versions'] },
+                  ],
+                ],
+              },
             },
           }, {
             loader: 'sass-loader',
@@ -45,7 +63,7 @@ module.exports = {
           }
         ],
       }, {
-        test: /\.jsx?$/,
+        test: /\.(js|jsx|ts|tsx)$/,
         use: {
           loader: 'babel-loader',
           options: {
@@ -61,8 +79,4 @@ module.exports = {
       filename: '[name].css',
     }),
   ],
-  resolve: {
-    extensions: ['.js', '.json', '.jsx', '.css', '.scss'],
-    modules: ['node_modules'],
-  },
 };

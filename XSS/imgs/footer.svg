@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="470px" height="38px" viewBox="0 0 470 38" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 52.2 (67145) - http://www.bohemiancoding.com/sketch -->
+<svg width="469px" height="31px" viewBox="0 0 469 31" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.5 (67469) - http://www.bohemiancoding.com/sketch -->
     <title>footer</title>
     <desc>Created with Sketch.</desc>
     <defs>
@@ -9,21 +9,38 @@
             <stop stop-color="#D0021B" stop-opacity="0.16" offset="100%"></stop>
         </linearGradient>
         <text id="text-2" font-family="Arial-Black, Arial Black" font-size="32" font-weight="700" fill="#D0021B">
-            <tspan x="35.4453125" y="31">XSS</tspan>
+            <tspan x="36.4453125" y="28">XSS</tspan>
         </text>
         <filter x="-0.7%" y="-1.2%" width="101.4%" height="104.8%" filterUnits="objectBoundingBox" id="filter-3">
             <feOffset dx="0" dy="1" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
             <feColorMatrix values="0 0 0 0 1   0 0 0 0 1   0 0 0 0 1  0 0 0 1 0" type="matrix" in="shadowOffsetOuter1"></feColorMatrix>
         </filter>
+        <linearGradient x1="100%" y1="100%" x2="1.94078403%" y2="100%" id="linearGradient-4">
+            <stop stop-color="#A30014" offset="0%"></stop>
+            <stop stop-color="#D0021B" offset="100%"></stop>
+        </linearGradient>
+        <path d="M104.249224,3.857835e-14 L470,6.09741259e-14 L470,31 L104.249224,31 L118,15.5 L104.249224,-1.51823196e-14 Z" id="path-5"></path>
+        <linearGradient x1="50%" y1="6.64632531%" x2="50%" y2="99.3086965%" id="linearGradient-6">
+            <stop stop-color="#FF5F5F" stop-opacity="0.121490036" offset="0%"></stop>
+            <stop stop-color="#FF5F5F" stop-opacity="0" offset="100%"></stop>
+        </linearGradient>
     </defs>
-    <g id="footer" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <rect id="Rectangle" fill="url(#linearGradient-1)" x="0" y="0" width="470" height="38"></rect>
-        <g id="XSS" fill="#D0021B" fill-opacity="1">
-            <use filter="url(#filter-3)" xlink:href="#text-2"></use>
-            <use xlink:href="#text-2"></use>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="GUI" transform="translate(0.000000, -317.000000)">
+            <g id="footer" transform="translate(0.000000, 317.000000)">
+                <rect id="Rectangle" fill="url(#linearGradient-1)" fill-rule="evenodd" x="0" y="0" width="470" height="31"></rect>
+                <g id="XSS" fill="#D0021B" fill-opacity="1">
+                    <use filter="url(#filter-3)" xlink:href="#text-2"></use>
+                    <use xlink:href="#text-2"></use>
+                </g>
+                <polygon id="Polygon" fill="#D0021B" fill-rule="evenodd" transform="translate(18.021484, 15.500000) rotate(90.000000) translate(-18.021484, -15.500000) " points="18.0214844 -2.52148437 33.5214844 9.08385429 33.5214844 33.5214844 2.52148438 33.5214844 2.52148438 9.08385429"></polygon>
+                <rect id="Rectangle" fill="#D0021B" fill-rule="evenodd" x="0" y="0" width="470" height="2"></rect>
+                <g id="Combined-Shape" fill-rule="evenodd">
+                    <use fill="#D0021B" xlink:href="#path-5"></use>
+                    <use fill="url(#linearGradient-4)" xlink:href="#path-5"></use>
+                </g>
+                <rect id="Rectangle" fill="url(#linearGradient-6)" fill-rule="evenodd" x="0" y="16" width="470" height="16"></rect>
+            </g>
         </g>
-        <polygon id="Polygon" fill="#D0021B" transform="translate(18.000000, 19.000000) rotate(90.000000) translate(-18.000000, -19.000000) " points="18 1 37 14.7507764 37 37 -1 37 -1 14.7507764"></polygon>
-        <rect id="Rectangle" fill="#D0021B" x="0" y="0" width="470" height="2"></rect>
-        <path d="M104.249224,-1.47123552e-14 L470,7.6834207e-15 L470,38 L104.249224,38 L118,19 L104.249224,-2.60189904e-16 Z" id="Combined-Shape" fill="#D0021B"></path>
     </g>
 </svg>

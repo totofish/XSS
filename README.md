@@ -8,7 +8,7 @@
 
 ## Extension Install
 
-未上至 Chrome 線上應用程式商店，所以請下載 <a href="XSS.crx" target="_blank">XSS.crx</a> 後，開啟 `chrome://extensions/` 頁面後將 XSS.crx 拖進頁面中安裝。
+未上至 Chrome 線上應用程式商店，所以請 git clone 後，開啟 chrome://extensions/ 頁面將 XSS folder 拖進頁面中安裝
 
 ## Export and Import Scripts
 
@@ -16,6 +16,4 @@
 
 ## Extension
 
-<img width="469" src="docs/GUI.png">
-<img width="469" src="docs/Editor.png">
-<img width="469" src="docs/Drop.png">
+<img width="469" src="docs/ui.png">

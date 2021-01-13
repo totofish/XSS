@@ -1,4 +1,5 @@
 import React, { FC, useState } from 'react';
+import { js } from 'js-beautify';
 import { Controlled as CodeMirror } from 'react-codemirror2';
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/theme/neo.css';
@@ -39,6 +40,12 @@ const Editor: FC<EditorProps> = ({
     if (onDel) onDel();
   };
 
+  const handleFormat = () => {
+    setCode(
+      js(code, { indent_size: 2 }),
+    );
+  };
+
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value || '');
   };
@@ -64,9 +71,14 @@ const Editor: FC<EditorProps> = ({
         onChange={handleTitleChange}
       />
       <div className="btns">
-        <button type="button" className="del" title="del" onClick={handleDel}>
+        <button type="button" className="del" title="delete" onClick={handleDel}>
           <svg width="26px" height="26px">
             <use xlinkHref="../imgs/del.svg#del" />
+          </svg>
+        </button>
+        <button type="button" className="format" title="format" onClick={handleFormat}>
+          <svg width="26px" height="26px">
+            <use xlinkHref="../imgs/format-line-icon.svg#format_line_icon" />
           </svg>
         </button>
         <button type="button" className="red" onClick={handleSave}>Save</button>

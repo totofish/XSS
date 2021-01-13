@@ -7,7 +7,7 @@ $transition-time: 0.25s;
 $btn-color-red: #F32038;
 $btn-color-gray: #9B9B9B;
 $selection-color: rgba($color-red, 0.15);
-$yallow: #ff9d00;
+$yallow: #FF9D00;
 $box-shadow: inset 0 1px 3px 0 rgba(0,0,0,0.22);
 $border-radius-lg: 8px;
 $border-radius-sm: 4px;
@@ -230,7 +230,7 @@ footer {
 }
 
 .input-title {
-  width: 238px;
+  width: 229px;
   height: 26px;
   margin-bottom: 8px;
   display: inline-block;
@@ -276,7 +276,7 @@ footer {
 
 button {
   margin-left: 10px;
-  width: 77px;
+  width: 65px;
   height: 26px;
   border-radius: $border-radius-sm;
   background-color: white;
@@ -306,7 +306,8 @@ button {
     }
   }
 
-  &.del {
+  &.del,
+  &.format {
     width: 26px;
     height: 26px;
     padding: 0;
@@ -315,11 +316,15 @@ button {
     fill: $color-line;
     margin-left: 9px;
 
-    &:hover {
+    &:hover:not(.format) {
       fill: $btn-color-red;
+    }
+    &:hover:not(.del) {
+      fill: $yallow;
     }
   }
 }
+
 
 .drop-mask {
   pointer-events: none;

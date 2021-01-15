@@ -14,8 +14,8 @@ $border-radius-sm: 4px;
 
 html,
 body {
-  width: 469px;
-  height: 348px;
+  min-width: 469px;
+  min-height: 348px;
   padding: 0;
   margin: 0;
   background-color: $color-bg;
@@ -65,35 +65,30 @@ footer {
   bottom: 0;
   z-index: 10;
   pointer-events: none;
+  width: 100%;
+  background-color: #a40014;
 }
 
 .list,
 .editor {
+  width: 100%;
   position: absolute;
   display: block;
   background-color: $color-bg;
   top: 0;
   left: 0;
-  width: 100%;
-  height: calc(348px - 31px);
+  height: calc(100vh - 31px);
+  box-sizing: border-box;
 }
 
 .list {
   overflow-y: auto;
   user-select: none;
+  padding-top: 5px;
+}
 
-  // &::-webkit-scrollbar {
-  //   width: 10px;
-  // }
-  // &::-webkit-scrollbar-track {
-  //   background: transparent;
-  // }
-  // &::-webkit-scrollbar-thumb {
-  //   background: $yallow;
-  //   opacity: 0.5;
-  //   border-radius: 10px;
-  //   border: 3px solid $color-bg;
-  // }
+.droppable > div {
+  display: flex;
 }
 
 .editor {
@@ -113,9 +108,14 @@ footer {
   box-sizing: border-box;
   transition: $transition-time;
 
-  &:first-child {
-    margin-top: 10px;
+  .play-icon,
+  .set-icon {
+    pointer-events: none;
   }
+
+  // &:first-child {
+  //   margin-top: 10px;
+  // }
 
   .script-title {
     width: 100%;
@@ -214,8 +214,8 @@ footer {
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  border-color: $yallow;
-  opacity: 0.5;
+  border-color: rgba($yallow, 0.5);
+  margin-bottom: 10px;
 
   .add-icon {
     opacity: 0.3;
@@ -223,6 +223,9 @@ footer {
   }
 
   &:hover {
+    border: 1px solid rgba($color-red-line, 0.4);
+    box-shadow: 0 0 5px 0 rgba(208, 2, 27, 0.35);
+
     .add-icon {
       opacity: 1;
     }
@@ -230,7 +233,7 @@ footer {
 }
 
 .input-title {
-  width: 229px;
+  width: calc(100% - 235px);
   height: 26px;
   margin-bottom: 8px;
   display: inline-block;
@@ -245,8 +248,8 @@ footer {
 }
 
 .textarea-script {
-  width: 449px;
-  height: 244px;
+  width: 100%;
+  height: calc(100% - 36px);
 
   .CodeMirror-vscrollbar,
   .CodeMirror-hscrollbar {
@@ -254,7 +257,7 @@ footer {
   }
 
   .CodeMirror {
-    height: 264px;
+    height: 100%;
     border: 1px solid $color-line;
     box-shadow: $box-shadow;
     border-radius: $border-radius-lg;
@@ -270,6 +273,7 @@ footer {
 }
 
 .btns {
+  right: 10px;
   position: absolute;
   display: inline-flex;
 }
@@ -329,7 +333,23 @@ button {
 .drop-mask {
   pointer-events: none;
   position: fixed;
-  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
   top: 0;
   left: 0;
+  z-index: 100;
+  background-color: rgba(255, 255, 255, 0.85);
+
+  .drop-mask-line {
+    width: calc(100% - 40px);
+    height: calc(100% - 40px);
+    display: flex;
+    border: 3px dashed $yallow;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+  }
 }

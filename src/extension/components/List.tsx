@@ -1,10 +1,18 @@
-import React, { FC, useState } from 'react';
+/* eslint-disable @typescript-eslint/unbound-method */
+/* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable react/no-array-index-key */
+import React, { FC, useCallback } from 'react';
 import { Base64 } from 'js-base64';
+import { useDropzone } from 'react-dropzone';
+import {
+  DragDropContext, Droppable, Draggable, DropResult,
+} from 'react-beautiful-dnd';
 import ScriptItem from './ScriptItem';
 import { IScriptItem } from '../../types';
 
 interface ListProps {
   scripts: Array<IScriptItem>;
+  onMoveSort: (startIndex: number, endIndex: number) => void;
   onEdit: (scriptIndex: number) => void;
   onEmitCode: (scriptIndex: number) => void;
   onImportScripts: (data: Array<IScriptItem>) => void;
@@ -13,83 +21,99 @@ interface ListProps {
 
 const List: FC<ListProps> = ({
   scripts,
+  onMoveSort,
   onEdit,
   onEmitCode,
   onImportScripts,
   onAdd,
 }: ListProps) => {
-  const [dragOver, setDragOver] = useState(false);
+  const onDrop = useCallback((acceptedFiles: Array<File>) => {
+    const file = acceptedFiles[0];
+    if (file && /.json$/i.test(file.name)) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        if (typeof reader.result !== 'string') return;
+        const importData = Base64.decode(reader.result.replace('data:application/json;base64,', ''));
+        onImportScripts(JSON.parse(importData));
+      };
+      reader.readAsDataURL(file);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  const onDrop = (event: React.DragEvent<HTMLDivElement>) => {
-    event.preventDefault();
-    setDragOver(false);
-    if (event.dataTransfer?.items) {
-      const firstItem = event.dataTransfer.items[0];
-      if (firstItem.kind === 'file') {
-        const file = firstItem.getAsFile();
-        if (file && /.json$/i.test(file.name)) {
-          const reader = new FileReader();
-          reader.onloadend = () => {
-            if (typeof reader.result !== 'string') return;
-            const importData = Base64.decode(reader.result.replace('data:application/json;base64,', ''));
-            onImportScripts(JSON.parse(importData));
-          };
-          reader.readAsDataURL(file);
-        }
-      }
+  const { getRootProps, isDragActive } = useDropzone({ onDrop });
+
+  const onDragEnd = (result: DropResult) => {
+    if (result.destination) {
+      const startIndex = result.source.index;
+      const endIndex = result.destination.index;
+      onMoveSort(startIndex, endIndex);
     }
   };
 
-  const onDragOver = (event: React.DragEvent<HTMLDivElement>) => {
-    event.preventDefault();
-    setDragOver(true);
-  };
-
-  const onDragLeave = (event: React.DragEvent<HTMLDivElement>) => {
-    event.preventDefault();
-    setDragOver(false);
-  };
-
-  const renderItems = () => {
-    const list = scripts.map((scriptItem, index) => (
-      <ScriptItem
-          // eslint-disable-next-line react/no-array-index-key
-        key={index}
-        title={scriptItem.title}
-        code={scriptItem.code}
-        scriptIndex={index}
-        onEdit={onEdit}
-        onEmitCode={onEmitCode}
-      />
-    ));
-    return [
-      ...list,
-      <div key="add" className="add-script-item" onClick={onAdd}>
-        <img alt="" className="add-icon" src="../imgs/add.svg" />
-      </div>,
-    ];
-  };
-
   const renderDropMask = () => {
-    if (!dragOver) return <></>;
+    if (!isDragActive) return <></>;
 
     return (
       <div className="drop-mask">
-        <img width="469" height="348" alt="" src="../imgs/drop.svg" />
+        <div className="drop-mask-line">
+          <img width="80" height="80" alt="" src="../imgs/drop.svg" />
+        </div>
       </div>
     );
   };
 
-  return (
-    <div
-      className="list"
-      onDragLeave={onDragLeave}
-      onDragOver={onDragOver}
-      onDrop={onDrop}
+  const renderItems = () => scripts.map((scriptItem, index) => (
+    <Draggable
+      key={`${scriptItem.title}_${index}`}
+      draggableId={`script_${index}`}
+      index={index}
     >
-      { renderItems() }
+      {(draggableProvided) => (
+        <div
+          ref={draggableProvided.innerRef}
+          {...draggableProvided.draggableProps}
+          {...draggableProvided.dragHandleProps}
+        >
+          <ScriptItem
+            key={index}
+            title={scriptItem.title}
+            code={scriptItem.code}
+            scriptIndex={index}
+            onEdit={onEdit}
+            onEmitCode={onEmitCode}
+          />
+        </div>
+      )}
+    </Draggable>
+  ));
+
+  return (
+    <section
+      className="list"
+      {...getRootProps()}
+    >
+      <DragDropContext onDragEnd={onDragEnd}>
+        <Droppable droppableId="droppable">
+          {
+            (provided) => (
+              <div
+                {...provided.droppableProps}
+                ref={provided.innerRef}
+                className="droppable"
+              >
+                { renderItems() }
+                { provided.placeholder }
+              </div>
+            )
+          }
+        </Droppable>
+      </DragDropContext>
+      <div key="add" className="add-script-item" onClick={onAdd}>
+        <img alt="" className="add-icon" src="../imgs/add.svg" />
+      </div>
       { renderDropMask() }
-    </div>
+    </section>
   );
 };
 

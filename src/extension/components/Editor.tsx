@@ -61,7 +61,7 @@ const Editor: FC<EditorProps> = ({
   };
 
   return (
-    <div className="editor">
+    <section className="editor">
       <input
         type="text"
         className="input-title"
@@ -90,7 +90,7 @@ const Editor: FC<EditorProps> = ({
         onBeforeChange={handleCodeChange}
         options={options}
       />
-    </div>
+    </section>
   );
 };
 

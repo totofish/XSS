@@ -27,8 +27,10 @@
     "js-base64": "^3.6.0",
     "js-beautify": "^1.13.1",
     "react": "^17.0.1",
+    "react-beautiful-dnd": "^13.0.0",
     "react-codemirror2": "^7.2.1",
-    "react-dom": "^17.0.1"
+    "react-dom": "^17.0.1",
+    "react-dropzone": "^11.2.4"
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",
@@ -39,6 +41,7 @@
     "@types/chrome": "^0.0.128",
     "@types/js-beautify": "^1.13.1",
     "@types/react": "^17.0.0",
+    "@types/react-beautiful-dnd": "^13.0.0",
     "@types/react-dom": "^17.0.0",
     "@typescript-eslint/eslint-plugin": "^4.12.0",
     "@typescript-eslint/parser": "^4.12.0",

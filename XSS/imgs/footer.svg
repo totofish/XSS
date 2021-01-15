@@ -19,15 +19,20 @@
             <stop stop-color="#A30014" offset="0%"></stop>
             <stop stop-color="#D0021B" offset="100%"></stop>
         </linearGradient>
-        <path d="M104.249224,3.857835e-14 L470,6.09741259e-14 L470,31 L104.249224,31 L118,15.5 L104.249224,-1.51823196e-14 Z" id="path-5"></path>
+        <path d="M104.249224,-1.6488712e-14 L470,5.90706386e-15 L470,31 L104.249224,31 L118,15.5 L104.249224,-1.69586765e-14 Z" id="path-5"></path>
         <linearGradient x1="50%" y1="6.64632531%" x2="50%" y2="99.3086965%" id="linearGradient-6">
             <stop stop-color="#FF5F5F" stop-opacity="0.121490036" offset="0%"></stop>
             <stop stop-color="#FF5F5F" stop-opacity="0" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="100%" y1="50%" x2="0%" y2="50%" id="linearGradient-7">
+            <stop stop-color="#A30014" offset="0%"></stop>
+            <stop stop-color="#A30014" stop-opacity="0" offset="100%"></stop>
         </linearGradient>
     </defs>
     <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
         <g id="GUI" transform="translate(0.000000, -317.000000)">
             <g id="footer" transform="translate(0.000000, 317.000000)">
+                <rect id="bg" fill="#FBFBFB" fill-rule="evenodd" x="0" y="0" width="470" height="31"></rect>
                 <rect id="Rectangle" fill="url(#linearGradient-1)" fill-rule="evenodd" x="0" y="0" width="470" height="31"></rect>
                 <g id="XSS" fill="#D0021B" fill-opacity="1">
                     <use filter="url(#filter-3)" xlink:href="#text-2"></use>
@@ -40,6 +45,7 @@
                     <use fill="url(#linearGradient-4)" xlink:href="#path-5"></use>
                 </g>
                 <rect id="Rectangle" fill="url(#linearGradient-6)" fill-rule="evenodd" x="0" y="16" width="470" height="16"></rect>
+                <rect id="Rectangle" fill="url(#linearGradient-7)" fill-rule="evenodd" x="371" y="0" width="99" height="31"></rect>
             </g>
         </g>
     </g>

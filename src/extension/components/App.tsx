@@ -90,10 +90,18 @@ const App: FC<AppProps> = ({
     setEditorTarget(scriptList.length);
   };
 
+  const handleSort = (startIndex: number, endIndex: number) => {
+    const savelist = [...scriptList];
+    const [removed] = savelist.splice(startIndex, 1);
+    savelist.splice(endIndex, 0, removed);
+    save(savelist);
+  };
+
   return stage === Stage.LIST
     ? (
       <List
         scripts={scriptList}
+        onMoveSort={handleSort}
         onEdit={handleEdit}
         onEmitCode={handleEmitCode}
         onImportScripts={handleImportScripts}

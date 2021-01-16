@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useCallback, useMemo } from 'react';
 
 interface ScriptItemProps {
   title: string;
@@ -8,6 +8,8 @@ interface ScriptItemProps {
   onEmitCode: (scriptIndex: number) => void;
 }
 
+/* ScriptItem Component */
+
 const ScriptItem: FC<ScriptItemProps> = ({
   title,
   code,
@@ -15,15 +17,15 @@ const ScriptItem: FC<ScriptItemProps> = ({
   onEdit,
   onEmitCode,
 }: ScriptItemProps) => {
-  const handleClickPlay = () => {
+  const handleClickPlay = useCallback(() => {
     if (onEmitCode) onEmitCode(scriptIndex);
-  };
+  }, [scriptIndex, onEmitCode]);
 
-  const handleClickSet = () => {
+  const handleClickSet = useCallback(() => {
     if (onEdit) onEdit(scriptIndex);
-  };
+  }, [scriptIndex, onEdit]);
 
-  const renderScript = () => (
+  const renderScript = useMemo(() => (
     <>
       <div className="center-line" />
       <div className="half" onClick={handleClickPlay}>
@@ -33,15 +35,15 @@ const ScriptItem: FC<ScriptItemProps> = ({
         <img className="set-icon" alt="" src="../imgs/settings.svg" />
       </div>
     </>
-  );
+  ), [handleClickPlay, handleClickSet]);
 
-  const renderEmptyScript = () => (
+  const renderEmptyScript = useMemo(() => (
     <>
       <div className="full" onClick={handleClickSet}>
         <img className="set-icon" alt="" src="../imgs/settings.svg" />
       </div>
     </>
-  );
+  ), [handleClickSet]);
 
   return (
     <div className="script-item">
@@ -52,11 +54,7 @@ const ScriptItem: FC<ScriptItemProps> = ({
         </div>
       </div>
       <div className="mask">
-        {
-          code
-            ? renderScript()
-            : renderEmptyScript()
-        }
+        { code ? renderScript : renderEmptyScript }
       </div>
     </div>
   );

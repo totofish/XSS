@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable react/no-array-index-key */
-import React, { FC, useCallback } from 'react';
+import React, { FC, useCallback, useMemo } from 'react';
 import { Base64 } from 'js-base64';
 import { useDropzone } from 'react-dropzone';
 import {
@@ -18,6 +18,8 @@ interface ListProps {
   onImportScripts: (data: Array<IScriptItem>) => void;
   onAdd: () => void;
 }
+
+/* List Component */
 
 const List: FC<ListProps> = ({
   scripts,
@@ -38,20 +40,19 @@ const List: FC<ListProps> = ({
       };
       reader.readAsDataURL(file);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [onImportScripts]);
 
   const { getRootProps, isDragActive } = useDropzone({ onDrop });
 
-  const onDragEnd = (result: DropResult) => {
+  const onDragEnd = useCallback((result: DropResult) => {
     if (result.destination) {
       const startIndex = result.source.index;
       const endIndex = result.destination.index;
       onMoveSort(startIndex, endIndex);
     }
-  };
+  }, [onMoveSort]);
 
-  const renderDropMask = () => {
+  const renderDropMask = useMemo(() => {
     if (!isDragActive) return <></>;
 
     return (
@@ -61,9 +62,9 @@ const List: FC<ListProps> = ({
         </div>
       </div>
     );
-  };
+  }, [isDragActive]);
 
-  const renderItems = () => scripts.map((scriptItem, index) => (
+  const renderItems = useMemo(() => scripts.map((scriptItem, index) => (
     <Draggable
       key={`${scriptItem.title}_${index}`}
       draggableId={`script_${index}`}
@@ -86,7 +87,7 @@ const List: FC<ListProps> = ({
         </div>
       )}
     </Draggable>
-  ));
+  )), [scripts, onEdit, onEmitCode]);
 
   return (
     <section
@@ -102,7 +103,7 @@ const List: FC<ListProps> = ({
                 ref={provided.innerRef}
                 className="droppable"
               >
-                { renderItems() }
+                { renderItems }
                 { provided.placeholder }
               </div>
             )
@@ -112,7 +113,7 @@ const List: FC<ListProps> = ({
       <div key="add" className="add-script-item" onClick={onAdd}>
         <img alt="" className="add-icon" src="../imgs/add.svg" />
       </div>
-      { renderDropMask() }
+      { renderDropMask }
     </section>
   );
 };

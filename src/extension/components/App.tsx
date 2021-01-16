@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useCallback, useState } from 'react';
 import List from './List';
 import Editor from './Editor';
 import { IScriptItem } from '../../types';
@@ -14,6 +14,8 @@ enum Stage {
   EDITOR = 'EDITOR',
 }
 
+/* App Component */
+
 const App: FC<AppProps> = ({
   scripts,
   onSave,
@@ -23,31 +25,31 @@ const App: FC<AppProps> = ({
   const [stage, setStage] = useState(Stage.LIST);
   const [editorTarget, setEditorTarget] = useState<number | undefined>(undefined);
 
-  const handleEdit = (scriptIndex: number) => {
+  const handleEdit = useCallback((scriptIndex: number) => {
     setStage(Stage.EDITOR);
     setEditorTarget(scriptIndex);
-  };
+  }, []);
 
-  const getScriptData = (
+  const getScriptData = useCallback((
     scriptIndex?: number,
   ): IScriptItem | undefined => (
     scriptIndex === undefined ? undefined : scriptList[scriptIndex]
-  );
+  ), [scriptList]);
 
-  const handleEmitCode = (scriptIndex: number) => {
+  const handleEmitCode = useCallback((scriptIndex: number) => {
     if (!onEmitCode) return;
     const script = getScriptData(scriptIndex);
     if (script) onEmitCode(script.code);
-  };
+  }, [getScriptData, onEmitCode]);
 
-  const save = (savelist: Array<IScriptItem>) => {
+  const save = useCallback((savelist: Array<IScriptItem>) => {
     setScriptList(savelist);
     if (onSave) onSave(savelist);
     setStage(Stage.LIST);
     setEditorTarget(undefined);
-  };
+  }, [onSave]);
 
-  const handleImportScripts = (data: Array<IScriptItem>) => {
+  const handleImportScripts = useCallback((data: Array<IScriptItem>) => {
     if (!Array.isArray(data)) return;
 
     let savelist: Array<IScriptItem> = [...data];
@@ -58,14 +60,14 @@ const App: FC<AppProps> = ({
     savelist.map((item) => ({ title: item.title, code: item.code }));
 
     save(savelist);
-  };
+  }, [save]);
 
-  const handleEditorCancel = () => {
+  const handleEditorCancel = useCallback(() => {
     setStage(Stage.LIST);
     setEditorTarget(undefined);
-  };
+  }, []);
 
-  const handleEditorDel = () => {
+  const handleEditorDel = useCallback(() => {
     if (editorTarget === undefined) return;
 
     let savelist: Array<IScriptItem> = [...scriptList];
@@ -73,9 +75,9 @@ const App: FC<AppProps> = ({
     savelist = savelist.filter((item) => item);
 
     save(savelist);
-  };
+  }, [scriptList, editorTarget, save]);
 
-  const handleEditorSave = (value: IScriptItem) => {
+  const handleEditorSave = useCallback((value: IScriptItem) => {
     if (editorTarget === undefined) return;
 
     let savelist: Array<IScriptItem> = [...scriptList];
@@ -83,19 +85,19 @@ const App: FC<AppProps> = ({
     savelist = savelist.filter((item) => item);
 
     save(savelist);
-  };
+  }, [scriptList, editorTarget, save]);
 
-  const handleAddScript = () => {
+  const handleAddScript = useCallback(() => {
     setStage(Stage.EDITOR);
     setEditorTarget(scriptList.length);
-  };
+  }, [scriptList]);
 
-  const handleSort = (startIndex: number, endIndex: number) => {
+  const handleSort = useCallback((startIndex: number, endIndex: number) => {
     const savelist = [...scriptList];
     const [removed] = savelist.splice(startIndex, 1);
     savelist.splice(endIndex, 0, removed);
     save(savelist);
-  };
+  }, [scriptList, save]);
 
   return stage === Stage.LIST
     ? (

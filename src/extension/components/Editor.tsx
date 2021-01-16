@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useCallback, useState } from 'react';
 import { js } from 'js-beautify';
 import { Controlled as CodeMirror } from 'react-codemirror2';
 import 'codemirror/lib/codemirror.css';
@@ -13,6 +13,14 @@ interface EditorProps {
   onCancel: () => void,
 }
 
+const options = {
+  lineNumbers: false,
+  mode: 'javascript',
+  theme: 'neo',
+};
+
+/* Editor Component */
+
 const Editor: FC<EditorProps> = ({
   scriptData,
   onSave,
@@ -22,43 +30,33 @@ const Editor: FC<EditorProps> = ({
   const [title, setTitle] = useState(scriptData ? scriptData.title || '' : '');
   const [code, setCode] = useState(scriptData ? scriptData.code || '' : '');
 
-  const handleSave = () => {
+  const handleSave = useCallback(() => {
     const data: IScriptItem = {
       title: title ? title.trim() : '',
       code: code ? code.trim() : '',
     };
     if (onSave) onSave(data);
-  };
+  }, [title, code, onSave]);
 
-  const handleCancel = () => {
-    if (onCancel) onCancel();
-  };
-
-  const handleDel = () => {
+  const handleDel = useCallback(() => {
     setTitle('');
     setCode('');
     if (onDel) onDel();
-  };
+  }, [onDel]);
 
-  const handleFormat = () => {
+  const handleFormat = useCallback(() => {
     setCode(
       js(code, { indent_size: 2 }),
     );
-  };
+  }, [code]);
 
-  const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleTitleChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value || '');
-  };
+  }, []);
 
-  const handleCodeChange = (editor: unknown, data: unknown, value: string) => {
+  const handleCodeChange = useCallback((editor: unknown, data: unknown, value: string) => {
     setCode(value);
-  };
-
-  const options = {
-    lineNumbers: false,
-    mode: 'javascript',
-    theme: 'neo',
-  };
+  }, []);
 
   return (
     <section className="editor">
@@ -82,7 +80,7 @@ const Editor: FC<EditorProps> = ({
           </svg>
         </button>
         <button type="button" className="red" onClick={handleSave}>Save</button>
-        <button type="button" className="gray" onClick={handleCancel}>Cancel</button>
+        <button type="button" className="gray" onClick={onCancel}>Cancel</button>
       </div>
       <CodeMirror
         className="textarea-script"

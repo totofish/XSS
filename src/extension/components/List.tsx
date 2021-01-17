@@ -70,11 +70,11 @@ const List: FC<ListProps> = ({
       draggableId={`script_${index}`}
       index={index}
     >
-      {(draggableProvided) => (
+      {(provided) => (
         <div
-          ref={draggableProvided.innerRef}
-          {...draggableProvided.draggableProps}
-          {...draggableProvided.dragHandleProps}
+          ref={provided.innerRef}
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
         >
           <ScriptItem
             key={index}
@@ -99,8 +99,8 @@ const List: FC<ListProps> = ({
           {
             (provided) => (
               <div
-                {...provided.droppableProps}
                 ref={provided.innerRef}
+                {...provided.droppableProps}
                 className="droppable"
               >
                 { renderItems }

@@ -1,4 +1,6 @@
-import React, { FC, useCallback, useState } from 'react';
+import React, {
+  FC, useCallback, useEffect, useState,
+} from 'react';
 import { js } from 'js-beautify';
 import { Controlled as CodeMirror } from 'react-codemirror2';
 import 'codemirror/lib/codemirror.css';
@@ -29,6 +31,7 @@ const Editor: FC<EditorProps> = ({
 }: EditorProps) => {
   const [title, setTitle] = useState(scriptData ? scriptData.title || '' : '');
   const [code, setCode] = useState(scriptData ? scriptData.code || '' : '');
+  const [fullscreen, setFullscreen] = useState(false);
 
   const handleSave = useCallback(() => {
     const data: IScriptItem = {
@@ -50,6 +53,10 @@ const Editor: FC<EditorProps> = ({
     );
   }, [code]);
 
+  const handleToggleFullscreen = useCallback(() => {
+    setFullscreen(!fullscreen);
+  }, [fullscreen]);
+
   const handleTitleChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value || '');
   }, []);
@@ -57,6 +64,30 @@ const Editor: FC<EditorProps> = ({
   const handleCodeChange = useCallback((editor: unknown, data: unknown, value: string) => {
     setCode(value);
   }, []);
+
+  useEffect(() => {
+    // Maximum width and height limits for Chrome extensions
+    const [availWidth, availHeight] = [800, 600];
+    if (fullscreen) {
+      document.body.style.width = `${availWidth}px`;
+      document.body.style.height = `${availHeight}px`;
+      if (document.fullscreenElement === null) {
+        void document.documentElement.requestFullscreen();
+      }
+    } else {
+      if (document.fullscreenElement !== null) {
+        void document.exitFullscreen();
+      }
+      document.body.removeAttribute('style');
+    }
+
+    return () => {
+      if (document.fullscreenElement !== null) {
+        void document.exitFullscreen();
+      }
+      document.body.removeAttribute('style');
+    };
+  }, [fullscreen]);
 
   return (
     <section className="editor">
@@ -70,13 +101,23 @@ const Editor: FC<EditorProps> = ({
       />
       <div className="btns">
         <button type="button" className="del" title="delete" onClick={handleDel}>
-          <svg width="26px" height="26px">
-            <use xlinkHref="../imgs/del.svg#del" />
+          <svg width="24px" height="24px">
+            <use xlinkHref="../imgs/icons.svg#del" />
           </svg>
         </button>
         <button type="button" className="format" title="format" onClick={handleFormat}>
-          <svg width="26px" height="26px">
-            <use xlinkHref="../imgs/format-line-icon.svg#format_line_icon" />
+          <svg width="24px" height="24px">
+            <use xlinkHref="../imgs/icons.svg#format" />
+          </svg>
+        </button>
+        <button
+          type="button"
+          className="fullscreen"
+          title={fullscreen ? 'exit fullscreen' : 'fullscreen'}
+          onClick={handleToggleFullscreen}
+        >
+          <svg width="24px" height="24px">
+            <use xlinkHref={`../imgs/icons.svg#${fullscreen ? 'close_fullscreen' : 'fullscreen'}`} />
           </svg>
         </button>
         <button type="button" className="red" onClick={handleSave}>Save</button>

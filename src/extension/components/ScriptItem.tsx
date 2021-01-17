@@ -46,7 +46,7 @@ const ScriptItem: FC<ScriptItemProps> = ({
   ), [handleClickSet]);
 
   return (
-    <div className="script-item">
+    <div className="script-item" title={title}>
       <img className="code-icon" alt="" src={code ? '../imgs/code.svg' : '../imgs/no-code.svg'} />
       <div className="script-title">
         <div className="title">

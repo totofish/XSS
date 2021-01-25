@@ -1,12 +1,17 @@
 import React, {
   FC, useCallback, useEffect, useState,
 } from 'react';
+import styled from 'styled-components';
 import { js } from 'js-beautify';
 import { Controlled as CodeMirror } from 'react-codemirror2';
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/theme/neo.css';
 import 'codemirror/mode/javascript/javascript';
 import { IScriptItem } from '../../types';
+import Stage from '../styled/Stage';
+import Input from '../styled/Input';
+import Button, { IconButton } from '../styled/Button';
+import { theme } from '../styled/theme';
 
 interface EditorProps {
   scriptData?: IScriptItem;
@@ -20,6 +25,54 @@ const options = {
   mode: 'javascript',
   theme: 'neo',
 };
+
+/* Styled Components */
+
+const InputTitle = styled(Input)`
+  width: calc(100% - 246px);
+  height: 26px;
+  margin-bottom: 8px;
+  display: inline-block;
+  color: ${(props) => props.theme.color.yallow};
+  border: 1px dashed ${(props) => props.theme.color.redLine};
+  font-weight: ${(props) => props.theme.fontWeight.bold};
+  font-size: 14px;
+
+  &::placeholder {
+    font-weight: ${(props) => props.theme.fontWeight.normal};
+    color:rgba(80, 80, 80, 0.35);
+  }
+`;
+
+const ButtonArea = styled.div`
+  right: 10px;
+  position: absolute;
+  display: inline-flex;
+`;
+
+const TextareaScript = styled(CodeMirror)`
+  width: 100%;
+  height: calc(100% - 36px);
+
+  .CodeMirror-vscrollbar,
+  .CodeMirror-hscrollbar {
+    outline: none;
+  }
+
+  .CodeMirror {
+    height: 100%;
+    box-shadow: ${(props) => props.theme.boxShadow};
+    border-radius: ${(props) => props.theme.borderRadius.lg};
+    padding: 0 6px;
+    border: 1px dashed ${(props) => props.theme.color.redLine};
+  }
+  .CodeMirror-focused .CodeMirror-selected,
+  .CodeMirror-line::selection,
+  .CodeMirror-line > span::selection,
+  .CodeMirror-line > span > span::selection {
+    background: ${(props) => props.theme.color.selection} !important;
+  }
+`;
 
 /* Editor Component */
 
@@ -90,46 +143,53 @@ const Editor: FC<EditorProps> = ({
   }, [fullscreen]);
 
   return (
-    <section className="editor">
-      <input
+    <Stage $editor>
+      <InputTitle
         type="text"
-        className="input-title"
         maxLength={100}
         placeholder="Please enter a script title"
         value={title}
         onChange={handleTitleChange}
       />
-      <div className="btns">
-        <button type="button" className="del" title="delete" onClick={handleDel}>
+      <ButtonArea>
+        <IconButton
+          type="button"
+          hoverColor={theme.button.red}
+          title="delete"
+          onClick={handleDel}
+        >
           <svg width="24px" height="24px">
             <use xlinkHref="../imgs/icons.svg#del" />
           </svg>
-        </button>
-        <button type="button" className="format" title="format" onClick={handleFormat}>
+        </IconButton>
+        <IconButton
+          type="button"
+          title="format"
+          onClick={handleFormat}
+        >
           <svg width="24px" height="24px">
             <use xlinkHref="../imgs/icons.svg#format" />
           </svg>
-        </button>
-        <button
+        </IconButton>
+        <IconButton
+          scale={0.9}
           type="button"
-          className="fullscreen"
           title={fullscreen ? 'exit fullscreen' : 'fullscreen'}
           onClick={handleToggleFullscreen}
         >
           <svg width="24px" height="24px">
             <use xlinkHref={`../imgs/icons.svg#${fullscreen ? 'close_fullscreen' : 'fullscreen'}`} />
           </svg>
-        </button>
-        <button type="button" className="red" onClick={handleSave}>Save</button>
-        <button type="button" className="gray" onClick={onCancel}>Cancel</button>
-      </div>
-      <CodeMirror
-        className="textarea-script"
+        </IconButton>
+        <Button type="button" red onClick={handleSave}>Save</Button>
+        <Button type="button" gray onClick={onCancel}>Cancel</Button>
+      </ButtonArea>
+      <TextareaScript
         value={code}
         onBeforeChange={handleCodeChange}
         options={options}
       />
-    </section>
+    </Stage>
   );
 };
 

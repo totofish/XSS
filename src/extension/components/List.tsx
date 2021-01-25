@@ -2,13 +2,16 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable react/no-array-index-key */
 import React, { FC, useCallback, useMemo } from 'react';
+import styled from 'styled-components';
 import { Base64 } from 'js-base64';
 import { useDropzone } from 'react-dropzone';
 import {
   DragDropContext, Droppable, Draggable, DropResult,
 } from 'react-beautiful-dnd';
 import ScriptItem from './ScriptItem';
+import Stage from '../styled/Stage';
 import { IScriptItem } from '../../types';
+import { AddScriptItemBox } from '../styled/ScriptItemBox';
 
 interface ListProps {
   scripts: Array<IScriptItem>;
@@ -18,6 +21,38 @@ interface ListProps {
   onImportScripts: (data: Array<IScriptItem>) => void;
   onAdd: () => void;
 }
+
+/* Styled Components */
+
+const DropMask = styled.div`
+  pointer-events: none;
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  background-color: rgba(255, 255, 255, 0.85);
+
+  .drop-mask-line {
+    width: calc(100% - 40px);
+    height: calc(100% - 40px);
+    display: flex;
+    border: 3px dashed ${(props) => props.theme.color.yallow};
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+  }
+`;
+
+const DroppableArea = styled.div`
+  & > div {
+    display: flex;
+  }
+`;
 
 /* List Component */
 
@@ -56,11 +91,11 @@ const List: FC<ListProps> = ({
     if (!isDragActive) return <></>;
 
     return (
-      <div className="drop-mask">
+      <DropMask>
         <div className="drop-mask-line">
           <img width="80" height="80" alt="" src="../imgs/drop.svg" />
         </div>
-      </div>
+      </DropMask>
     );
   }, [isDragActive]);
 
@@ -90,31 +125,30 @@ const List: FC<ListProps> = ({
   )), [scripts, onEdit, onEmitCode]);
 
   return (
-    <section
-      className="list"
+    <Stage
+      $list
       {...getRootProps()}
     >
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="droppable">
           {
             (provided) => (
-              <div
+              <DroppableArea
                 ref={provided.innerRef}
                 {...provided.droppableProps}
-                className="droppable"
               >
                 { renderItems }
                 { provided.placeholder }
-              </div>
+              </DroppableArea>
             )
           }
         </Droppable>
       </DragDropContext>
-      <div key="add" className="add-script-item" onClick={onAdd}>
-        <img alt="" className="add-icon" src="../imgs/add.svg" />
-      </div>
+      <AddScriptItemBox key="add" onClick={onAdd}>
+        <img alt="" src="../imgs/add.svg" />
+      </AddScriptItemBox>
       { renderDropMask }
-    </section>
+    </Stage>
   );
 };
 

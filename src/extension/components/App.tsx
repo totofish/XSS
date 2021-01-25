@@ -1,6 +1,9 @@
 import React, { FC, useCallback, useState } from 'react';
+import { ThemeProvider } from 'styled-components';
 import List from './List';
 import Editor from './Editor';
+import GlobalStyle from '../styled/GlobalStyle';
+import { theme } from '../styled/theme';
 import { IScriptItem } from '../../types';
 
 interface AppProps {
@@ -99,7 +102,7 @@ const App: FC<AppProps> = ({
     save(savelist);
   }, [scriptList, save]);
 
-  return stage === Stage.LIST
+  const view = stage === Stage.LIST
     ? (
       <List
         scripts={scriptList}
@@ -118,6 +121,13 @@ const App: FC<AppProps> = ({
         scriptData={getScriptData(editorTarget)}
       />
     );
+
+  return (
+    <ThemeProvider theme={theme}>
+      <GlobalStyle />
+      { view }
+    </ThemeProvider>
+  );
 };
 
 App.defaultProps = {

@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "webpack --mode development -w --devtool source-map",
     "build": "yarn del & webpack --mode production",
-    "del": "del ./XSS/broswer ./XSS/extension"
+    "del": "del ./XSS/broswer ./XSS/extension",
+    "lint:css": "stylelint './src/**/*.{ts,tsx}'"
   },
   "repository": {
     "type": "git",
@@ -26,11 +27,13 @@
     "core-js": "^3.8.2",
     "js-base64": "^3.6.0",
     "js-beautify": "^1.13.1",
+    "polished": "^4.1.0",
     "react": "^17.0.1",
     "react-beautiful-dnd": "^13.0.0",
     "react-codemirror2": "^7.2.1",
     "react-dom": "^17.0.1",
-    "react-dropzone": "^11.2.4"
+    "react-dropzone": "^11.2.4",
+    "styled-components": "^5.2.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",
@@ -43,6 +46,7 @@
     "@types/react": "^17.0.0",
     "@types/react-beautiful-dnd": "^13.0.0",
     "@types/react-dom": "^17.0.0",
+    "@types/styled-components": "^5.1.7",
     "@typescript-eslint/eslint-plugin": "^4.12.0",
     "@typescript-eslint/parser": "^4.12.0",
     "autoprefixer": "^10.2.1",
@@ -57,9 +61,14 @@
     "eslint-plugin-react-hooks": "^4.2.0",
     "mini-css-extract-plugin": "^1.3.3",
     "node-sass": "^5.0.0",
+    "postcss": "^8.2.4",
     "postcss-loader": "^4.1.0",
     "prop-types": "^15.6.2",
     "sass-loader": "^10.1.0",
+    "stylelint": "^13.9.0",
+    "stylelint-config-recommended": "^3.0.0",
+    "stylelint-config-styled-components": "^0.1.1",
+    "stylelint-processor-styled-components": "^1.10.0",
     "typescript": "^4.1.3",
     "webpack": "^5.12.2",
     "webpack-cli": "^4.3.1"

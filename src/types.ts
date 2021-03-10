@@ -17,3 +17,7 @@ export interface IScriptItem {
   title: string;
   code: string;
 }
+
+export interface ISetting {
+  dark: boolean;
+}

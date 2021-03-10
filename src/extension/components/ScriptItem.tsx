@@ -15,7 +15,7 @@ interface ScriptItemProps {
 const CenterLine = styled.div`
   width: 1px;
   height: 23px;
-  background-image: linear-gradient(${(props) => props.theme.color.redLine} 60%, transparent 0%);
+  background-image: linear-gradient(${(props) => props.theme.color.hoverLine} 60%, transparent 0%);
   background-position: right;
   background-size: 1px 5px;
   background-repeat: repeat-y;

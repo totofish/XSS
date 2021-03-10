@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/App';
 import './GUI.scss';
-import { IScriptItem, UiEvent } from '../types';
+import { IScriptItem, ISetting, UiEvent } from '../types';
 
 const saveStorage = (scripts: Array<IScriptItem>) => {
   chrome.storage.local.set({ scripts });
@@ -31,16 +31,36 @@ const emitCode = (code?: string) => {
   });
 };
 
+function render(result: { scripts?: Array<IScriptItem>, setting?: ISetting }) {
+  const { scripts, setting } = result;
+  ReactDOM.render(
+    <App
+      scripts={scripts}
+      dark={setting?.dark}
+      onSave={saveStorage}
+      onEmitCode={emitCode}
+    />,
+    document.getElementById('root'),
+  );
+}
+
 chrome.storage.local.get(
-  ['scripts'],
-  (result: { scripts?: Array<IScriptItem> }) => {
-    ReactDOM.render(
-      <App
-        scripts={result.scripts}
-        onSave={saveStorage}
-        onEmitCode={emitCode}
-      />,
-      document.getElementById('root'),
-    );
+  ['scripts', 'setting'],
+  (result: { scripts?: Array<IScriptItem>, setting?: ISetting }) => {
+    const { setting } = result;
+    if (setting && setting.dark) {
+      document.documentElement.classList.add('dark');
+    }
+
+    const ready = () => {
+      document.removeEventListener('DOMContentLoaded', ready, false);
+      render(result);
+    };
+
+    if (document.getElementById('root')) {
+      render(result);
+    } else {
+      document.addEventListener('DOMContentLoaded', ready, false);
+    }
   },
 );

@@ -1,0 +1,1 @@
+document.addEventListener("DOMContentLoaded",(function(){chrome.storage.local.get(["setting"],(e=>{const{setting:t}=e,n=document.getElementById("dark");t&&t.dark?n.checked=!0:n.checked=!1}))})),document.getElementById("dark").addEventListener("change",(e=>{const t=e.target;var n;n=t.checked,chrome.storage.local.set({setting:{dark:n}})}));

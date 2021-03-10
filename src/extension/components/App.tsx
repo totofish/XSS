@@ -3,11 +3,13 @@ import { ThemeProvider } from 'styled-components';
 import List from './List';
 import Editor from './Editor';
 import GlobalStyle from '../styled/GlobalStyle';
-import { theme } from '../styled/theme';
+import { themes } from '../styled/theme';
 import { IScriptItem } from '../../types';
+import { StyleTheme } from '../../styled.d';
 
 interface AppProps {
   scripts?: Array<IScriptItem>;
+  dark?: boolean;
   onSave: (scripts: Array<IScriptItem>) => void;
   onEmitCode: (code?: string) => void;
 }
@@ -21,9 +23,13 @@ enum Stage {
 
 const App: FC<AppProps> = ({
   scripts,
+  dark,
   onSave,
   onEmitCode,
 }: AppProps) => {
+  const [currentTheme] = useState<StyleTheme>(
+    dark ? StyleTheme.DARK : StyleTheme.LIGHT,
+  );
   const [scriptList, setScriptList] = useState(scripts || [] as Array<IScriptItem>);
   const [stage, setStage] = useState(Stage.LIST);
   const [editorTarget, setEditorTarget] = useState<number | undefined>(undefined);
@@ -115,6 +121,7 @@ const App: FC<AppProps> = ({
     )
     : (
       <Editor
+        dark={dark}
         onSave={handleEditorSave}
         onDel={handleEditorDel}
         onCancel={handleEditorCancel}
@@ -123,7 +130,7 @@ const App: FC<AppProps> = ({
     );
 
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={themes[currentTheme]}>
       <GlobalStyle />
       { view }
     </ThemeProvider>
@@ -132,6 +139,7 @@ const App: FC<AppProps> = ({
 
 App.defaultProps = {
   scripts: [],
+  dark: false,
 };
 
 export default App;

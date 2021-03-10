@@ -35,7 +35,7 @@ const DropMask = styled.div`
   top: 0;
   left: 0;
   z-index: 100;
-  background-color: rgba(255, 255, 255, 0.85);
+  background-color: ${(props) => props.theme.dropMask.bg};
 
   .drop-mask-line {
     width: calc(100% - 40px);

@@ -3,27 +3,33 @@ import React, {
 } from 'react';
 import styled from 'styled-components';
 import { js } from 'js-beautify';
-import { Controlled as CodeMirror } from 'react-codemirror2';
+import { Controlled as CodeMirror, IControlledCodeMirror } from 'react-codemirror2';
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/theme/neo.css';
+import 'codemirror/theme/mbo.css';
 import 'codemirror/mode/javascript/javascript';
 import { IScriptItem } from '../../types';
 import Stage from '../styled/Stage';
 import Input from '../styled/Input';
 import Button, { IconButton } from '../styled/Button';
-import { theme } from '../styled/theme';
+import { Color } from '../styled/theme';
 
 interface EditorProps {
   scriptData?: IScriptItem;
+  dark?: boolean;
   onSave: (value: IScriptItem) => void,
   onDel: () => void,
   onCancel: () => void,
 }
 
-const options = {
+interface ITextareaScript extends IControlledCodeMirror {
+  fullscreen: boolean;
+}
+
+const defaultOptions = {
   lineNumbers: false,
   mode: 'javascript',
-  theme: 'neo',
+  theme: 'neo', // 'mbo'
 };
 
 /* Styled Components */
@@ -34,7 +40,7 @@ const InputTitle = styled(Input)`
   margin-bottom: 8px;
   display: inline-block;
   color: ${(props) => props.theme.color.yallow};
-  border: 1px dashed ${(props) => props.theme.color.redLine};
+  border: 1px dashed ${(props) => props.theme.color.hoverLine};
   font-weight: ${(props) => props.theme.fontWeight.bold};
   font-size: 14px;
 
@@ -50,7 +56,7 @@ const ButtonArea = styled.div`
   display: inline-flex;
 `;
 
-const TextareaScript = styled(CodeMirror)`
+const TextareaScript = styled(CodeMirror)<ITextareaScript>`
   width: 100%;
   height: calc(100% - 36px);
 
@@ -63,8 +69,15 @@ const TextareaScript = styled(CodeMirror)`
     height: 100%;
     box-shadow: ${(props) => props.theme.boxShadow};
     border-radius: ${(props) => props.theme.borderRadius.lg};
-    padding: 0 6px;
-    border: 1px dashed ${(props) => props.theme.color.redLine};
+    padding: 0 ${(props) => ((props.fullscreen) ? 0 : 6)}px;
+    border: 1px dashed ${(props) => props.theme.color.hoverLine};
+
+    &.cm-s-neo {
+      .CodeMirror-cursor {
+        width: 1px;
+        background: rgba(155,157,162,0.8);
+      }
+    }
   }
   .CodeMirror-focused .CodeMirror-selected,
   .CodeMirror-line::selection,
@@ -78,6 +91,7 @@ const TextareaScript = styled(CodeMirror)`
 
 const Editor: FC<EditorProps> = ({
   scriptData,
+  dark,
   onSave,
   onDel,
   onCancel,
@@ -85,6 +99,10 @@ const Editor: FC<EditorProps> = ({
   const [title, setTitle] = useState(scriptData ? scriptData.title || '' : '');
   const [code, setCode] = useState(scriptData ? scriptData.code || '' : '');
   const [fullscreen, setFullscreen] = useState(false);
+  const [options, setOptions] = useState({
+    ...defaultOptions,
+    theme: dark ? 'mbo' : 'neo',
+  });
 
   const handleSave = useCallback(() => {
     const data: IScriptItem = {
@@ -108,7 +126,8 @@ const Editor: FC<EditorProps> = ({
 
   const handleToggleFullscreen = useCallback(() => {
     setFullscreen(!fullscreen);
-  }, [fullscreen]);
+    setOptions({ ...options, lineNumbers: !fullscreen });
+  }, [fullscreen, options]);
 
   const handleTitleChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value || '');
@@ -154,7 +173,7 @@ const Editor: FC<EditorProps> = ({
       <ButtonArea>
         <IconButton
           type="button"
-          hoverColor={theme.button.red}
+          hoverColor={Color.LIGHT_RED}
           title="delete"
           onClick={handleDel}
         >
@@ -186,6 +205,7 @@ const Editor: FC<EditorProps> = ({
       </ButtonArea>
       <TextareaScript
         value={code}
+        fullscreen={fullscreen}
         onBeforeChange={handleCodeChange}
         options={options}
       />
@@ -195,6 +215,7 @@ const Editor: FC<EditorProps> = ({
 
 Editor.defaultProps = {
   scriptData: undefined,
+  dark: false,
 };
 
 export default Editor;

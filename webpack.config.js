@@ -8,6 +8,7 @@ module.exports = {
     'extension/content': './src/extension/content.ts',
     'extension/GUI': './src/extension/GUI.tsx',
     'extension/background': './src/extension/background.ts',
+    'extension/options': './src/extension/options.ts',
   },
   output: {
     filename: '[name].js',

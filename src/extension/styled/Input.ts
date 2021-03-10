@@ -5,7 +5,7 @@ interface InputProps {
 }
 
 export default styled.input<InputProps>`
-  background: #FFFFFF;
+  background: ${(props) => props.theme.input.bg};
   border: 1px solid ${(props) => props.theme.color.line};
   box-shadow: ${(props) => props.theme.boxShadow};
   border-radius: ${(props) => props.theme.borderRadius.lg};

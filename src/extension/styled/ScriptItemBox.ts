@@ -9,23 +9,23 @@ const ScriptItemBox = styled.div`
   display: inline-block;
   border: 1px dashed ${(props) => props.theme.color.yallow};
   border-radius: ${(props) => props.theme.borderRadius.lg};
-  background: white;
+  background: ${(props) => props.theme.color.scriptItemBoxBg};
   box-sizing: border-box;
   transition: ${(props) => props.theme.transitionTime};
+  overflow: hidden;
 
   .mask {
     width: 100%;
     height: 100%;
-    background: rgba(255, 255, 255, 0.80);
+    background: ${(props) => props.theme.color.maskBg};
     opacity: 0;
     position: absolute;
     transition: ${(props) => props.theme.transitionTime};
-    border-radius: ${(props) => props.theme.borderRadius.lg};
   }
 
   &:hover {
-    border: 1px solid ${(props) => props.theme.color.redLine};
-    box-shadow: 0 0 5px 0 ${(props) => rgba(props.theme.color.redLine, 0.35)};
+    border: 1px solid ${(props) => props.theme.color.hoverLine};
+    box-shadow: 0 0 5px 0 ${(props) => rgba(props.theme.color.hoverLine, 0.35)};
 
     .mask {
       opacity: 1;
@@ -47,8 +47,8 @@ export const AddScriptItemBox = styled(ScriptItemBox)`
   }
 
   &:hover {
-    border: 1px solid ${(props) => rgba(props.theme.color.redLine, 0.4)};
-    box-shadow: 0 0 5px 0 ${(props) => rgba(props.theme.color.redLine, 0.35)};
+    border: 1px solid ${(props) => rgba(props.theme.color.hoverLine, 0.4)};
+    box-shadow: 0 0 5px 0 ${(props) => rgba(props.theme.color.hoverLine, 0.35)};
 
     img {
       opacity: 1;

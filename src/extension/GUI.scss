@@ -1,5 +1,6 @@
 $color-red: #D0021B;
 $color-bg: #FBFBFB;
+$color-dark-bg: #1E1E1E;
 $selection-color: rgba($color-red, 0.15);
 $min-width: 469px;
 $min-height: 348px;
@@ -30,4 +31,43 @@ footer {
   width: 100%;
   height: 31px;
   background-color: #A40014;
+}
+
+.dark {
+  background-color: $color-dark-bg;
+
+  body {
+    background-color: $color-dark-bg;
+  }
+
+  footer {
+    filter: grayscale(55%);
+  }
+
+  ::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #2C2C2C;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #4B4B4B;
+    border-radius: 12px;
+    opacity: 0.5;
+    border: 3px solid #2C2C2C;
+  }
+
+  ::-webkit-scrollbar-corner {
+    background: #2C2C2C;
+  }
+
+
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #5c5c5c;
+  }
+
 }

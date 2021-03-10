@@ -11,7 +11,7 @@ const Button = styled.button<ButtonProps>`
   width: 60px;
   height: 26px;
   border-radius: ${(props) => props.theme.borderRadius.sm};
-  background-color: white;
+  background-color: ${(props) => props.theme.button.bg};
   outline: none;
   cursor: pointer;
   font-weight: ${(props) => props.theme.fontWeight.normal};
@@ -50,7 +50,7 @@ export const IconButton = styled(Button)<IconButtonProps>`
   padding: 0;
   border: 0;
   background: transparent;
-  fill: ${(props) => props.theme.color.line};
+  fill: ${(props) => props.theme.button.fill};
   margin-left: 4px;
 
   svg {

@@ -29,5 +29,10 @@
   "background": {
     "scripts": ["extension/background.js"],
     "persistent": false
+  },
+  "options_ui": {
+    "page": "options.html",
+    "chrome_style": true,
+    "open_in_tab": false
   }
 }

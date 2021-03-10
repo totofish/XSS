@@ -1,19 +1,32 @@
 import 'styled-components';
 
+export enum StyleTheme {
+  LIGHT = 'light',
+  DARK = 'dark',
+}
+
 // and extend them!
 declare module 'styled-components' {
   export interface DefaultTheme {
+    type: StyleTheme;
     color: {
       red: string;
-      redLine: string;
+      hoverLine: string;
       bg: string;
+      scriptItemBoxBg: string;
+      maskBg: string;
       line: string;
       yallow: string;
       selection: string;
     };
+    input: {
+      bg: string;
+    };
     button: {
       red: string;
       gray: string;
+      bg: string;
+      fill: string;
     };
     borderRadius: {
       lg: string;
@@ -22,6 +35,9 @@ declare module 'styled-components' {
     fontWeight: {
       normal: string;
       bold: string;
+    };
+    dropMask: {
+      bg: string;
     };
     shadow: string;
     boxShadow: string;

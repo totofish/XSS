@@ -16,4 +16,12 @@
 
 ## Extension
 
-<img width="469" src="docs/ui.png">
+<img width="469" src="docs/light_theme_1.png">
+<img width="800" src="docs/light_theme_2.png">
+
+## Dark Theme
+
+外掛小圖示按右鍵選擇 `選項` 可切換成 `Dark Theme`
+
+<img width="469" src="docs/dark_theme_1.png">
+<img width="800" src="docs/dark_theme_2.png">

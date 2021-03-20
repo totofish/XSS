@@ -11,7 +11,7 @@ interface AppProps {
   scripts?: Array<IScriptItem>;
   dark?: boolean;
   onSave: (scripts: Array<IScriptItem>) => void;
-  onEmitCode: (code?: string) => void;
+  onEmitCode: (script: IScriptItem) => void;
 }
 
 enum Stage {
@@ -48,7 +48,7 @@ const App: FC<AppProps> = ({
   const handleEmitCode = useCallback((scriptIndex: number) => {
     if (!onEmitCode) return;
     const script = getScriptData(scriptIndex);
-    if (script) onEmitCode(script.code);
+    if (script) onEmitCode(script);
   }, [getScriptData, onEmitCode]);
 
   const save = useCallback((savelist: Array<IScriptItem>) => {

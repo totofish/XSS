@@ -8,12 +8,25 @@
       margin: 0;
       padding: 25px;;
     }
+    label {
+      margin-right: 20px;
+    }
+    label input {
+      margin-right: 5px !important;
+    }
+    label:last-of-type {
+      margin-right: 0px;
+    }
   </style>
 </head>
 <body>
   <label>
     <input type="checkbox" id="dark">
     Dark Theme
+  </label>
+  <label>
+    <input type="checkbox" id="notice">
+    Execution Notice
   </label>
   <script src="extension/options.js"></script>
 </body>

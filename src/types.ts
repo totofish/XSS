@@ -20,4 +20,5 @@ export interface IScriptItem {
 
 export interface ISetting {
   dark: boolean;
+  notice: boolean;
 }

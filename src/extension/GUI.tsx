@@ -4,25 +4,30 @@ import App from './components/App';
 import './GUI.scss';
 import { IScriptItem, ISetting, UiEvent } from '../types';
 
+let settingData: ISetting = {
+  dark: process.env.DARK_THEME === 'true',
+  notice: process.env.NOTICE === 'true',
+};
+
 const saveStorage = (scripts: Array<IScriptItem>) => {
   chrome.storage.local.set({ scripts });
 };
 
-const emitCode = (code?: string) => {
+const emitCode = (script: IScriptItem) => {
   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
     const { id } = tabs[0];
     if (id === undefined) return;
     chrome.tabs.sendMessage(
       id,
-      { type: UiEvent.EMIT_CODE, code },
+      { type: UiEvent.EMIT_CODE, code: script.code },
       (response) => {
         if (chrome.runtime.lastError) {
           console.log('lastError:', chrome.runtime.lastError);
         }
-        if (response === 'ok') {
+        if (response === 'ok' && settingData.notice) {
           // eslint-disable-next-line no-new
           new Notification(
-            'Execution Succeed',
+            `Execute Script: ${script.title}`,
             { icon: '../icon48.png' },
           );
         }
@@ -48,6 +53,9 @@ chrome.storage.local.get(
   ['scripts', 'setting'],
   (result: { scripts?: Array<IScriptItem>, setting?: ISetting }) => {
     const { setting } = result;
+    if (setting) {
+      settingData = setting;
+    }
     if (setting && setting.dark) {
       document.documentElement.classList.add('dark');
     }

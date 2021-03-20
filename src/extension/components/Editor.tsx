@@ -71,13 +71,6 @@ const TextareaScript = styled(CodeMirror)<ITextareaScript>`
     border-radius: ${(props) => props.theme.borderRadius.lg};
     padding: 0 ${(props) => ((props.fullscreen) ? 0 : 6)}px;
     border: 1px dashed ${(props) => props.theme.color.hoverLine};
-
-    &.cm-s-neo {
-      .CodeMirror-cursor {
-        width: 1px;
-        background: rgba(155,157,162,0.8);
-      }
-    }
   }
   .CodeMirror-focused .CodeMirror-selected,
   .CodeMirror-line::selection,

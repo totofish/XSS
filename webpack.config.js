@@ -2,6 +2,7 @@ const path = require('path');
 const TerserPlugin = require("terser-webpack-plugin");
 const MiniCSSExtractPlugin = require('mini-css-extract-plugin');
 const autoprefixer = require('autoprefixer');
+const Dotenv = require('dotenv-webpack');
 
 module.exports = {
   entry: {
@@ -79,5 +80,6 @@ module.exports = {
     new MiniCSSExtractPlugin({
       filename: '[name].css',
     }),
+    new Dotenv(),
   ],
 };

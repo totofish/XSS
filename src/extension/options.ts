@@ -29,13 +29,13 @@ function restoreOptions() {
       if (setting && typeof setting.dark === 'boolean') {
         darkCheckbox.checked = setting.dark;
       } else {
-        darkCheckbox.checked = false;
+        darkCheckbox.checked = (process.env.DARK_THEME === 'true');
       }
       // notification
       if (setting && typeof setting.notice === 'boolean') {
         noticeCheckbox.checked = setting.notice;
       } else {
-        noticeCheckbox.checked = false;
+        noticeCheckbox.checked = (process.env.NOTICE === 'true');
       }
     },
   );

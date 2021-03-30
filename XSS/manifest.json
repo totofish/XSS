@@ -1,6 +1,7 @@
 {
-  "name": "XSS",
-  "description": "Development tools",
+  "name": "__MSG_appName__",
+  "description": "__MSG_appDesc__",
+  "default_locale": "en",
   "version": "1.0.0",
   "manifest_version": 2,
   "icons": {
@@ -14,13 +15,13 @@
     "default_icon": "icon16.png"
   },
   "permissions": [
-    "activeTab",
     "notifications",
     "tabs",
-    "webNavigation",
     "contextMenus",
     "storage",
-    "downloads"
+    "downloads",
+    "https://*/*",
+    "http://*/*"
   ],
   "content_scripts" : [{
     "matches" : ["https://*/*", "http://*/*"],

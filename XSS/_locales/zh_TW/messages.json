@@ -1,0 +1,8 @@
+{
+  "appName": {
+    "message": "XSS"
+  },
+  "appDesc": {
+    "message": "Web Development tool"
+  }
+}

@@ -37,11 +37,11 @@ const emitCode = (script: IScriptItem) => {
 };
 
 function render(result: { scripts?: Array<IScriptItem>, setting?: ISetting }) {
-  const { scripts, setting } = result;
+  const { scripts } = result;
   ReactDOM.render(
     <App
       scripts={scripts}
-      dark={setting?.dark}
+      dark={settingData.dark}
       onSave={saveStorage}
       onEmitCode={emitCode}
     />,
@@ -54,9 +54,9 @@ chrome.storage.local.get(
   (result: { scripts?: Array<IScriptItem>, setting?: ISetting }) => {
     const { setting } = result;
     if (setting) {
-      settingData = setting;
+      settingData = { ...settingData, ...setting };
     }
-    if (setting && setting.dark) {
+    if (settingData && settingData.dark) {
       document.documentElement.classList.add('dark');
     }
 

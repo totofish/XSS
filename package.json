@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "webpack --mode development -w --devtool source-map",
     "build": "yarn del & webpack --mode production",
-    "del": "del ./XSS/broswer ./XSS/extension",
+    "del": "del ./XSS/extension",
     "lint": "eslint . & yarn lint:css",
     "lint:css": "stylelint './src/**/*.{ts,tsx}'"
   },

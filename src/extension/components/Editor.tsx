@@ -162,6 +162,7 @@ const Editor: FC<EditorProps> = ({
         placeholder="Please enter a script title"
         value={title}
         onChange={handleTitleChange}
+        autoFocus
       />
       <ButtonArea>
         <IconButton

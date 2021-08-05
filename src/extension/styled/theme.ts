@@ -25,7 +25,7 @@ export const themes: { light: DefaultTheme; dark: DefaultTheme } = {
       maskBg: 'rgba(255, 255, 255, 0.8)',
       line: Color.LIGHT_GRAY,
       yallow: Color.YALLOW,
-      selection: 'rgba(208, 2, 27, 0.15)',
+      selection: rgba(Color.RED, 0.15),
     },
     input: {
       bg: Color.WHITE,
@@ -61,7 +61,7 @@ export const themes: { light: DefaultTheme; dark: DefaultTheme } = {
       maskBg: rgba(Color.DARK, 0.9),
       line: Color.LIGHT_GRAY,
       yallow: Color.YALLOW,
-      selection: 'rgba(208, 2, 27, 0.15)',
+      selection: rgba(Color.RED, 0.5),
     },
     input: {
       bg: Color.BLACK,

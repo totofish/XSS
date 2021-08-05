@@ -49,7 +49,9 @@ footer {
     height: 12px;
   }
 
-  ::-webkit-scrollbar-track {
+  ::-webkit-scrollbar-track,
+  ::-webkit-scrollbar-corner,
+  .CodeMirror-scrollbar-filler {
     background: #2C2C2C;
   }
 
@@ -60,14 +62,7 @@ footer {
     border: 3px solid #2C2C2C;
   }
 
-  ::-webkit-scrollbar-corner {
-    background: #2C2C2C;
-  }
-
-
-
   ::-webkit-scrollbar-thumb:hover {
     background: #5c5c5c;
   }
-
 }

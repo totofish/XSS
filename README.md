@@ -8,7 +8,7 @@
 
 ## Extension Install
 
-未上至 Chrome 線上應用程式商店，所以請 git clone 後，開啟 chrome://extensions/ 頁面將 XSS folder 拖進頁面中安裝
+至 [Chrome 線上應用程式商店](https://chrome.google.com/webstore/detail/xss/bebjbdbgpmgdlfehkibnmgmbkcniaeij) 安裝
 
 ## Export and Import Scripts
 

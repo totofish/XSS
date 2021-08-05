@@ -14,6 +14,15 @@
 
 對外掛小圖示按右鍵選擇 `Export Scripts` 會將目前所有 Scripts 下載為 `scripts.json`，可讓別人將檔案 Drag 進 XSS 開啟的視窗介面 import 便能匯入 Scripts。
 
+## Auto Execute
+
+v1.1.0 版新增 Auto Execute 功能，切換前方 Auto Execute 狀態後，重整網頁時會在一開始便直接執行 scripts，方便執行一些需要一開始便執行的任務，例如使用 [Polly.js](https://netflix.github.io/pollyjs/) 來處理 mock api 的行為。不過須自己注意所攥寫的 script 不會造成無限重整頁面。
+
+```js
+// 例如這一段 script 啟用 Auto Execute 後會一直重整頁面
+location.reload()
+```
+
 ## Extension
 
 <img width="469" src="docs/dark_theme_1.png">
@@ -25,3 +34,32 @@
 
 <img width="469" src="docs/light_theme_1.png">
 <img width="800" src="docs/light_theme_2.png">
+
+## Tips
+
+於 Chrome Extension 中執行的 script 可以直接取得 document 並實際修改頁面元素，但安全性考量上 script 執行的 window 環境是與 browser 頁面的 window 環境隔離的，因此你無法直接取得或修改 window 上的參數資料。
+
+例如頁面上有一 data 資料，你將無法直接透過執行 `console.log(data)` 來取得頁面上的資料。
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script>
+      var data = 1;
+    </script>
+</head>
+```
+
+如果你必須這麼做用以進行後續的自動化行為你可以用此方法讓 script 執行於頁面本身實際的 window 環境上。
+
+```js
+const script = document.createElement('script');
+document.body.appendChild(script);
+// 實際要運行的 code
+script.innerHTML = `
+  console.log(data);
+  data++;
+  console.log(data);
+`;
+```

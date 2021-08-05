@@ -1,27 +1,32 @@
-import { ExtensionEvent, UiEvent } from '../types';
+import { IScriptItem, UiEvent } from '../types';
+
+function execute(code: string) {
+  // eslint-disable-next-line no-eval
+  window.eval(`(function(){${code}})();`);
+}
+
+chrome.storage.local.get(
+  ['scripts'],
+  (result: { scripts?: Array<IScriptItem> }) => {
+    if (result.scripts) {
+      result.scripts.forEach((scriptItem) => {
+        if (scriptItem.autoExecute && scriptItem.code) {
+          execute(scriptItem.code);
+        }
+      });
+    }
+  },
+);
 
 chrome.runtime.onMessage.addListener((
-  data: { type: ExtensionEvent } | { type: UiEvent; code: string; },
+  event: { type: UiEvent; code: string; },
   sender,
   sendResponse,
 ) => {
-  switch (data.type) {
-    // 偵聽 background 主程式訊息
-    case ExtensionEvent.CHECK_STATE:
-      // 確認是在普通網頁
-      sendResponse(JSON.stringify({
-        href: window.location.href,
-      }));
-      sendResponse('ok');
-      break;
+  switch (event.type) {
     case UiEvent.EMIT_CODE:
       // 執行自訂 script
-      // eslint-disable-next-line no-eval
-      window.eval(`
-        (function() {
-          ${data.code}
-        })();
-      `);
+      execute(event.code);
       sendResponse('ok');
       break;
     default:

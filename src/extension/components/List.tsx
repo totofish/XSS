@@ -18,6 +18,7 @@ interface ListProps {
   onMoveSort: (startIndex: number, endIndex: number) => void;
   onEdit: (scriptIndex: number) => void;
   onEmitCode: (scriptIndex: number) => void;
+  onToggleAutoExecute: (scriptIndex: number) => void;
   onImportScripts: (data: Array<IScriptItem>) => void;
   onAdd: () => void;
 }
@@ -61,10 +62,11 @@ const List: FC<ListProps> = ({
   onMoveSort,
   onEdit,
   onEmitCode,
+  onToggleAutoExecute,
   onImportScripts,
   onAdd,
 }: ListProps) => {
-  const onDrop = useCallback((acceptedFiles: Array<File>) => {
+  const handleDrop = useCallback((acceptedFiles: Array<File>) => {
     const file = acceptedFiles[0];
     if (file && /.json$/i.test(file.name)) {
       const reader = new FileReader();
@@ -77,9 +79,9 @@ const List: FC<ListProps> = ({
     }
   }, [onImportScripts]);
 
-  const { getRootProps, isDragActive } = useDropzone({ onDrop });
+  const { getRootProps, isDragActive } = useDropzone({ onDrop: handleDrop });
 
-  const onDragEnd = useCallback((result: DropResult) => {
+  const handleDragEnd = useCallback((result: DropResult) => {
     if (result.destination) {
       const startIndex = result.source.index;
       const endIndex = result.destination.index;
@@ -115,21 +117,23 @@ const List: FC<ListProps> = ({
             key={index}
             title={scriptItem.title}
             code={scriptItem.code}
+            autoExecute={scriptItem.autoExecute}
             scriptIndex={index}
             onEdit={onEdit}
             onEmitCode={onEmitCode}
+            onToggleAutoExecute={onToggleAutoExecute}
           />
         </div>
       )}
     </Draggable>
-  )), [scripts, onEdit, onEmitCode]);
+  )), [scripts, onEdit, onEmitCode, onToggleAutoExecute]);
 
   return (
     <Stage
       $list
       {...getRootProps()}
     >
-      <DragDropContext onDragEnd={onDragEnd}>
+      <DragDropContext onDragEnd={handleDragEnd}>
         <Droppable droppableId="droppable">
           {
             (provided) => (

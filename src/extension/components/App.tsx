@@ -58,6 +58,12 @@ const App: FC<AppProps> = ({
     setEditorTarget(undefined);
   }, [onSave]);
 
+  const handleToggleAutoExecute = useCallback((scriptIndex: number) => {
+    const savelist: Array<IScriptItem> = [...scriptList];
+    savelist[scriptIndex].autoExecute = !savelist[scriptIndex].autoExecute;
+    save(savelist);
+  }, [scriptList, save]);
+
   const handleImportScripts = useCallback((data: Array<IScriptItem>) => {
     if (!Array.isArray(data)) return;
 
@@ -117,6 +123,7 @@ const App: FC<AppProps> = ({
         onEmitCode={handleEmitCode}
         onImportScripts={handleImportScripts}
         onAdd={handleAddScript}
+        onToggleAutoExecute={handleToggleAutoExecute}
       />
     )
     : (

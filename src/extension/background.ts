@@ -1,55 +1,11 @@
 import { js } from 'js-beautify';
 import { Base64 } from 'js-base64';
-import { IScriptItem, ExtensionEvent, MenuItemId } from '../types';
+import { IScriptItem, MenuItemId } from '../types';
 
 /**
  * 外掛常駐背景程式
  * background.js 在打開 chrome 後只會觸發一次
  */
-
-const control = {
-  // disable extension
-  disableExtension: () => {
-    chrome.browserAction.setIcon({ path: 'icon16-gray.png' });
-    chrome.browserAction.disable();
-  },
-  // enable extension
-  enableExtension: () => {
-    chrome.browserAction.setIcon({ path: 'icon16.png' });
-    chrome.browserAction.enable();
-  },
-  // 更新 icon 狀態
-  updateIcon: () => {
-    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      // tabs 還未有資料或功能停用時
-      if (tabs.length === 0) {
-        control.disableExtension();
-        return;
-      }
-      const { id, url } = tabs[0];
-      // 偵測是否有狀態// 非正常網頁
-      if (!url || !/^https?:/.test(url)) {
-        control.disableExtension();
-        return;
-      }
-      if (id === undefined) return;
-
-      chrome.tabs.sendMessage(id, { type: ExtensionEvent.CHECK_STATE }, (response) => {
-        if (chrome.runtime.lastError) {
-          // 與 content 的連接尚未完成則跳脫
-          control.disableExtension();
-          return;
-        }
-
-        if (response) {
-          control.enableExtension();
-        } else {
-          control.disableExtension();
-        }
-      });
-    });
-  },
-};
 
 // 導出所有腳本
 function exportScripts() {
@@ -65,11 +21,6 @@ function exportScripts() {
     },
   );
 }
-
-// 頁籤更新
-chrome.tabs.onUpdated.addListener(control.updateIcon);
-// 頁籤切換
-chrome.tabs.onActivated.addListener(control.updateIcon);
 
 // 主選單設置 - 外掛安裝時
 chrome.runtime.onInstalled.addListener(() => {
@@ -87,13 +38,15 @@ chrome.runtime.onInstalled.addListener(() => {
   const scripts: Array<IScriptItem> = [
     {
       title: 'Inject Jquery',
+      autoExecute: false,
       code: js(`
         var script = document.createElement('script');
-        document.getElementsByTagName("body")[0].appendChild(script);
+        document.body.appendChild(script);
         script.src = 'https://code.jquery.com/jquery-3.5.1.min.js';
       `, { indent_size: 2 }),
     }, {
       title: 'Get Cookie',
+      autoExecute: false,
       code: js(`
         function getCookie() {
           if (document.cookie.length > 0) {

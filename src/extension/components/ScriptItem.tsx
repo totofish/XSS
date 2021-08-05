@@ -1,16 +1,14 @@
 import React, { FC, useCallback, useMemo } from 'react';
 import styled from 'styled-components';
 import ScriptItemBox from '../styled/ScriptItemBox';
-
-interface ScriptItemProps {
-  title: string;
-  code: string;
-  scriptIndex: number;
-  onEdit: (scriptIndex: number) => void;
-  onEmitCode: (scriptIndex: number) => void;
-}
+import SwitchButton from './SwitchButton';
 
 /* Styled Components */
+
+const ScriptItemWrapper = styled.div`
+  width: 100%;
+  position: relative;
+`;
 
 const CenterLine = styled.div`
   width: 1px;
@@ -93,12 +91,24 @@ const ScriptTitle = styled.div`
 
 /* ScriptItem Component */
 
+interface ScriptItemProps {
+  title: string;
+  code: string;
+  autoExecute: boolean;
+  scriptIndex: number;
+  onEdit: (scriptIndex: number) => void;
+  onEmitCode: (scriptIndex: number) => void;
+  onToggleAutoExecute: (scriptIndex: number) => void;
+}
+
 const ScriptItem: FC<ScriptItemProps> = ({
   title,
   code,
+  autoExecute,
   scriptIndex,
   onEdit,
   onEmitCode,
+  onToggleAutoExecute,
 }: ScriptItemProps) => {
   const handleClickPlay = useCallback(() => {
     if (onEmitCode) onEmitCode(scriptIndex);
@@ -107,6 +117,10 @@ const ScriptItem: FC<ScriptItemProps> = ({
   const handleClickSet = useCallback(() => {
     if (onEdit) onEdit(scriptIndex);
   }, [scriptIndex, onEdit]);
+
+  const handleToggleAutoExecute = useCallback(() => {
+    if (onToggleAutoExecute) onToggleAutoExecute(scriptIndex);
+  }, [scriptIndex, onToggleAutoExecute]);
 
   const renderScript = useMemo(() => (
     <>
@@ -129,17 +143,21 @@ const ScriptItem: FC<ScriptItemProps> = ({
   ), [handleClickSet]);
 
   return (
-    <ScriptItemBox title={title}>
-      <CodeIcon alt="" src={code ? '../imgs/code.svg' : '../imgs/no-code.svg'} />
-      <ScriptTitle>
-        <div className="title">
-          { title }
+    <ScriptItemWrapper>
+      <SwitchButton title="Auto Execute" style={{ left: 8, top: 17 }} checked={autoExecute} onChange={handleToggleAutoExecute} />
+      <ScriptItemBox title={title}>
+        <CodeIcon alt="" src={code ? '../imgs/code.svg' : '../imgs/no-code.svg'} />
+        <ScriptTitle>
+          <div className="title">
+            { title }
+          </div>
+        </ScriptTitle>
+        <div className="mask">
+          { code ? renderScript : renderEmptyScript }
         </div>
-      </ScriptTitle>
-      <div className="mask">
-        { code ? renderScript : renderEmptyScript }
-      </div>
-    </ScriptItemBox>
+      </ScriptItemBox>
+    </ScriptItemWrapper>
+
   );
 };
 

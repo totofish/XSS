@@ -2,9 +2,9 @@ import styled from 'styled-components';
 import { rgba } from 'polished';
 
 const ScriptItemBox = styled.div`
-  width: calc(100% - 20px);
+  width: calc(100% - 60px);
   height: 40px;
-  margin: 4px 10px;
+  margin: 4px 10px 4px 50px;
   position: relative;
   display: inline-block;
   border: 1px dashed ${(props) => props.theme.color.yallow};
@@ -34,6 +34,8 @@ const ScriptItemBox = styled.div`
 `;
 
 export const AddScriptItemBox = styled(ScriptItemBox)`
+  width: calc(100% - 20px);
+  margin: 4px 10px;
   display: flex;
   justify-content: center;
   align-items: center;

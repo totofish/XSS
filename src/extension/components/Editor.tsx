@@ -101,9 +101,10 @@ const Editor: FC<EditorProps> = ({
     const data: IScriptItem = {
       title: title ? title.trim() : '',
       code: code ? code.trim() : '',
+      autoExecute: scriptData?.autoExecute || false,
     };
     if (onSave) onSave(data);
-  }, [title, code, onSave]);
+  }, [scriptData, title, code, onSave]);
 
   const handleDel = useCallback(() => {
     setTitle('');

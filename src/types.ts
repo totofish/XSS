@@ -1,8 +1,3 @@
-// extension 內部通知事件
-export enum ExtensionEvent {
-  CHECK_STATE = 'CHECK_STATE',
-}
-
 // extension-ui 內部通知事件
 export enum UiEvent {
   EMIT_CODE = 'EMIT_CODE',
@@ -16,6 +11,8 @@ export enum MenuItemId {
 export interface IScriptItem {
   title: string;
   code: string;
+  // 重整網頁時立即執行
+  autoExecute: boolean;
 }
 
 export interface ISetting {

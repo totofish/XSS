@@ -27,6 +27,7 @@ const App: FC<AppProps> = ({
   onSave,
   onEmitCode,
 }: AppProps) => {
+  const [listScrollTop, setListScrollTop] = useState(0);
   const [currentTheme] = useState<StyleTheme>(
     dark ? StyleTheme.DARK : StyleTheme.LIGHT,
   );
@@ -118,6 +119,8 @@ const App: FC<AppProps> = ({
     ? (
       <List
         scripts={scriptList}
+        scrollTop={listScrollTop}
+        setListScrollTop={setListScrollTop}
         onMoveSort={handleSort}
         onEdit={handleEdit}
         onEmitCode={handleEmitCode}

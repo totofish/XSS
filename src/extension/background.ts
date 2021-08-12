@@ -41,7 +41,7 @@ chrome.runtime.onInstalled.addListener(() => {
       autoExecute: false,
       code: js(`
         var script = document.createElement('script');
-        document.body.appendChild(script);
+        document.documentElement.appendChild(script);
         script.src = 'https://code.jquery.com/jquery-3.5.1.min.js';
       `, { indent_size: 2 }),
     }, {

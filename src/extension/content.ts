@@ -1,8 +1,17 @@
 import { IScriptItem, UiEvent } from '../types';
 
 function execute(code: string) {
-  // eslint-disable-next-line no-eval
-  window.eval(`(function(){${code}})();`);
+  const script = document.createElement('script');
+  document.documentElement.appendChild(script);
+  // 使用 Promise 來延遲執行，確保 script.remove(); 先執行完畢，這樣讀取 document.body 內容時就不會讀到本身 script
+  script.innerHTML = `
+    (new Promise((resolve, reject) => {
+      resolve()
+    })).then(() => {
+      ${code}
+    })
+  `;
+  script.remove();
 }
 
 chrome.storage.local.get(

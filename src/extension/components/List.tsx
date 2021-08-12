@@ -1,7 +1,9 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable react/no-array-index-key */
-import React, { FC, useCallback, useMemo } from 'react';
+import React, {
+  FC, useCallback, useMemo, useLayoutEffect, useRef,
+} from 'react';
 import styled from 'styled-components';
 import { Base64 } from 'js-base64';
 import { useDropzone } from 'react-dropzone';
@@ -15,6 +17,8 @@ import { AddScriptItemBox } from '../styled/ScriptItemBox';
 
 interface ListProps {
   scripts: Array<IScriptItem>;
+  scrollTop: number;
+  setListScrollTop: React.Dispatch<React.SetStateAction<number>>;
   onMoveSort: (startIndex: number, endIndex: number) => void;
   onEdit: (scriptIndex: number) => void;
   onEmitCode: (scriptIndex: number) => void;
@@ -59,6 +63,8 @@ const DroppableArea = styled.div`
 
 const List: FC<ListProps> = ({
   scripts,
+  scrollTop,
+  setListScrollTop,
   onMoveSort,
   onEdit,
   onEmitCode,
@@ -66,6 +72,19 @@ const List: FC<ListProps> = ({
   onImportScripts,
   onAdd,
 }: ListProps) => {
+  const stageEl = useRef<HTMLElement>(null);
+  useLayoutEffect(() => {
+    if (stageEl.current) {
+      stageEl.current.scrollTop = scrollTop;
+    }
+    return () => {
+      const { current } = stageEl;
+      if (current) {
+        setListScrollTop(current.scrollTop);
+      }
+    };
+  }, [stageEl, scrollTop, setListScrollTop]);
+
   const handleDrop = useCallback((acceptedFiles: Array<File>) => {
     const file = acceptedFiles[0];
     if (file && /.json$/i.test(file.name)) {
@@ -132,6 +151,7 @@ const List: FC<ListProps> = ({
     <Stage
       $list
       {...getRootProps()}
+      ref={stageEl}
     >
       <DragDropContext onDragEnd={handleDragEnd}>
         <Droppable droppableId="droppable">

@@ -1,7 +1,7 @@
 <img width="150" src="docs/Icon.png">
 
 [![GitHub license](https://img.shields.io/github/license/totofish/XSS.svg)](https://github.com/totofish/XSS/blob/master/LICENSE)
-![main workflow](https://github.com/totofish/XSS/actions/workflows/main.yml/badge.svg)
+[![NodeJS with Webpack](https://github.com/totofish/XSS/actions/workflows/main.yml/badge.svg)](https://github.com/totofish/XSS/actions/workflows/main.yml)
 
 ## Introduction
 
@@ -36,31 +36,10 @@ location.reload()
 <img width="469" src="docs/light_theme_1.png">
 <img width="800" src="docs/light_theme_2.png">
 
-## Tips
+## Tip
 
-於 Chrome Extension 中執行的 script 可以直接取得 document 並實際修改頁面元素，但安全性考量上 script 執行的 window 環境是與 browser 頁面的 window 環境隔離的，因此你無法直接取得或修改 window 上的參數資料。
-
-例如頁面上有一 data 資料，你將無法直接透過執行 `console.log(data)` 來取得頁面上的資料。
-
-```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <script>
-      var data = 1;
-    </script>
-</head>
-```
-
-如果你必須這麼做用以進行後續的自動化行為你可以用此方法讓 script 執行於頁面本身實際的 window 環境上。
+Extension 注入 script 時有使用 closure，因此變數不會污染到 window 上。如果需要取得全域層級的參數可以明確使用 window 或 this。
 
 ```js
-const script = document.createElement('script');
-document.body.appendChild(script);
-// 實際要運行的 code
-script.innerHTML = `
-  console.log(data);
-  data++;
-  console.log(data);
-`;
+console.log(this === window); // true
 ```

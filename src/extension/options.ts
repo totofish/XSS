@@ -1,8 +1,8 @@
 import { ISetting } from '../types';
 
 let settingData: ISetting = {
-  dark: process.env.DARK_THEME === 'true',
-  notice: process.env.NOTICE === 'true',
+  dark: import.meta.env.VITE_DARK_THEME === 'true',
+  notice: import.meta.env.VITE_NOTICE === 'true',
 };
 
 function saveOptions(data: Partial<ISetting>) {
@@ -10,35 +10,44 @@ function saveOptions(data: Partial<ISetting>) {
     ...settingData,
     ...data,
   };
-  chrome.storage.local.set({
+  if (!chrome.storage) return;
+  void chrome.storage.local.set({
     setting: settingData,
   });
 }
 
+function syncUI(setting?: ISetting) {
+  const darkCheckbox = document.getElementById('dark')! as HTMLInputElement;
+  const noticeCheckbox = document.getElementById('notice')! as HTMLInputElement;
+  // theme
+  if (setting && typeof setting.dark === 'boolean') {
+    darkCheckbox.checked = setting.dark;
+  } else {
+    darkCheckbox.checked = (import.meta.env.VITE_DARK_THEME === 'true');
+  }
+  // notification
+  if (setting && typeof setting.notice === 'boolean') {
+    noticeCheckbox.checked = setting.notice;
+  } else {
+    noticeCheckbox.checked = (import.meta.env.VITE_NOTICE === 'true');
+  }
+}
+
 function restoreOptions() {
-  chrome.storage.local.get(
-    ['setting'],
-    (result: { setting?: ISetting }) => {
-      const { setting } = result;
-      const darkCheckbox = document.getElementById('dark')! as HTMLInputElement;
-      const noticeCheckbox = document.getElementById('notice')! as HTMLInputElement;
-      if (setting) {
-        settingData = setting;
-      }
-      // theme
-      if (setting && typeof setting.dark === 'boolean') {
-        darkCheckbox.checked = setting.dark;
-      } else {
-        darkCheckbox.checked = (process.env.DARK_THEME === 'true');
-      }
-      // notification
-      if (setting && typeof setting.notice === 'boolean') {
-        noticeCheckbox.checked = setting.notice;
-      } else {
-        noticeCheckbox.checked = (process.env.NOTICE === 'true');
-      }
-    },
-  );
+  if (chrome.storage) {
+    chrome.storage.local.get(
+      ['setting'],
+      (result: { setting?: ISetting }) => {
+        const { setting } = result;
+        if (setting) {
+          settingData = setting;
+        }
+        syncUI(settingData);
+      },
+    );
+  } else {
+    syncUI(settingData);
+  }
 }
 
 document.addEventListener('DOMContentLoaded', restoreOptions);

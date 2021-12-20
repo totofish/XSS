@@ -1,9 +1,5 @@
 import 'styled-components';
-
-export enum StyleTheme {
-  LIGHT = 'light',
-  DARK = 'dark',
-}
+import { StyleTheme } from './types';
 
 // and extend them!
 declare module 'styled-components' {

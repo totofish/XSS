@@ -3,6 +3,3 @@ node_modules
 /XSS
 /docs
 /dist
-
-.eslintrc.js
-webpack.config.js

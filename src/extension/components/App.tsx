@@ -4,8 +4,7 @@ import List from './List';
 import Editor from './Editor';
 import GlobalStyle from '../styled/GlobalStyle';
 import { themes } from '../styled/theme';
-import { IScriptItem } from '../../types';
-import { StyleTheme } from '../../styled.d';
+import { IScriptItem, StyleTheme } from '../../types';
 
 interface AppProps {
   scripts?: Array<IScriptItem>;

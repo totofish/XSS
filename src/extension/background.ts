@@ -73,7 +73,7 @@ chrome.runtime.onInstalled.addListener(() => {
     ['scripts'],
     (result: { scripts?: Array<IScriptItem> }) => {
       if (!result.scripts) {
-        chrome.storage.local.set({ scripts });
+        void chrome.storage.local.set({ scripts });
       }
     },
   );
@@ -82,7 +82,7 @@ chrome.runtime.onInstalled.addListener(() => {
 // 點擊自訂選單時
 chrome.contextMenus.onClicked.addListener((info) => {
   if (info.menuItemId === MenuItemId.ABOUT_XSS) {
-    chrome.tabs.create({
+    void chrome.tabs.create({
       url: 'https://github.com/totofish/XSS',
     });
   } else if (info.menuItemId === MenuItemId.EXPORT_SCRIPTS) {

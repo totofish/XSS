@@ -1,10 +1,12 @@
-.DS_Store
-._*
-.vscode
 node_modules
+.DS_Store
+dist
+dist-ssr
 npm-debug.log
 yarn-error.log
+*.local
 *.pem
 *.map
+XSS
 ignore
-XSS/extension
+.yarn

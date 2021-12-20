@@ -5,15 +5,17 @@ import './GUI.scss';
 import { IScriptItem, ISetting, UiEvent } from '../types';
 
 let settingData: ISetting = {
-  dark: process.env.DARK_THEME === 'true',
-  notice: process.env.NOTICE === 'true',
+  dark: import.meta.env.VITE_DARK_THEME === 'true',
+  notice: import.meta.env.VITE_NOTICE === 'true',
 };
 
 const saveStorage = (scripts: Array<IScriptItem>) => {
-  chrome.storage.local.set({ scripts });
+  if (!chrome.storage) return;
+  void chrome.storage.local.set({ scripts });
 };
 
 const emitCode = (script: IScriptItem) => {
+  if (!chrome.tabs) return;
   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
     const { id } = tabs[0];
     if (id === undefined) return;
@@ -49,26 +51,30 @@ function render(result: { scripts?: Array<IScriptItem>, setting?: ISetting }) {
   );
 }
 
-chrome.storage.local.get(
-  ['scripts', 'setting'],
-  (result: { scripts?: Array<IScriptItem>, setting?: ISetting }) => {
-    const { setting } = result;
-    if (setting) {
-      settingData = { ...settingData, ...setting };
-    }
-    if (settingData && settingData.dark) {
-      document.documentElement.classList.add('dark');
-    }
+if (chrome.storage) {
+  chrome.storage.local.get(
+    ['scripts', 'setting'],
+    (result: { scripts?: Array<IScriptItem>, setting?: ISetting }) => {
+      const { setting } = result;
+      if (setting) {
+        settingData = { ...settingData, ...setting };
+      }
+      if (settingData && settingData.dark) {
+        document.documentElement.classList.add('dark');
+      }
 
-    const ready = () => {
-      document.removeEventListener('DOMContentLoaded', ready, false);
-      render(result);
-    };
+      const ready = () => {
+        document.removeEventListener('DOMContentLoaded', ready, false);
+        render(result);
+      };
 
-    if (document.getElementById('root')) {
-      render(result);
-    } else {
-      document.addEventListener('DOMContentLoaded', ready, false);
-    }
-  },
-);
+      if (document.getElementById('root')) {
+        render(result);
+      } else {
+        document.addEventListener('DOMContentLoaded', ready, false);
+      }
+    },
+  );
+} else {
+  render({ scripts: [], setting: settingData });
+}

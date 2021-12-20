@@ -1,7 +1,7 @@
 <img width="150" src="docs/Icon.png">
 
 [![GitHub license](https://img.shields.io/github/license/totofish/XSS.svg)](https://github.com/totofish/XSS/blob/master/LICENSE)
-[![NodeJS with Webpack](https://github.com/totofish/XSS/actions/workflows/main.yml/badge.svg)](https://github.com/totofish/XSS/actions/workflows/main.yml)
+[![NodeJS with Vite](https://github.com/totofish/XSS/actions/workflows/main.yml/badge.svg)](https://github.com/totofish/XSS/actions/workflows/main.yml)
 
 ## Introduction
 

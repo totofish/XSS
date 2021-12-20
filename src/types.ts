@@ -19,3 +19,8 @@ export interface ISetting {
   dark: boolean;
   notice: boolean;
 }
+
+export enum StyleTheme {
+  LIGHT = 'light',
+  DARK = 'dark',
+}

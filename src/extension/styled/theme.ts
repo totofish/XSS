@@ -1,6 +1,6 @@
 import { DefaultTheme } from 'styled-components';
 import { rgba } from 'polished';
-import { StyleTheme } from '../../styled.d';
+import { StyleTheme } from '../../types';
 
 export enum Color {
   YALLOW = '#FF9D00',

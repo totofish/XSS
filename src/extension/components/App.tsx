@@ -5,6 +5,7 @@ import Editor from './Editor';
 import GlobalStyle from '../styled/GlobalStyle';
 import { themes } from '../styled/theme';
 import { IScriptItem, StyleTheme } from '../../types';
+import importFormatHelper from '../utility/importFormatHelper';
 
 interface AppProps {
   scripts?: Array<IScriptItem>;
@@ -66,14 +67,7 @@ const App: FC<AppProps> = ({
 
   const handleImportScripts = useCallback((data: Array<IScriptItem>) => {
     if (!Array.isArray(data)) return;
-
-    let savelist: Array<IScriptItem> = [...data];
-    savelist = savelist.filter((item) => (
-      Object.prototype.hasOwnProperty.call(item, 'title')
-        && Object.prototype.hasOwnProperty.call(item, 'code')
-    ));
-    savelist.map((item) => ({ title: item.title, code: item.code }));
-
+    const savelist = importFormatHelper(data);
     save(savelist);
   }, [save]);
 

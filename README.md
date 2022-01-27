@@ -11,10 +11,6 @@
 
 至 [Chrome 線上應用程式商店](https://chrome.google.com/webstore/detail/xss/bebjbdbgpmgdlfehkibnmgmbkcniaeij) 安裝
 
-## Export and Import Scripts
-
-對外掛小圖示按右鍵選擇 `Export Scripts` 會將目前所有 Scripts 下載為 `scripts.json`，可讓別人將檔案 Drag 進 XSS 開啟的視窗介面 import 便能匯入 Scripts。
-
 ## Auto Execute
 
 v1.1.0 版新增 Auto Execute 功能，切換前方 Auto Execute 狀態後，重整網頁時會在一開始便直接執行 scripts，方便執行一些需要一開始便執行的任務，例如使用 [Polly.js](https://netflix.github.io/pollyjs/) 來處理 mock api 的行為。不過須自己注意所攥寫的 script 不會造成無限重整頁面。
@@ -29,12 +25,20 @@ location.reload()
 <img width="469" src="docs/dark_theme_1.png">
 <img width="800" src="docs/dark_theme_2.png">
 
-## Dark Theme
+## Theme
 
 外掛小圖示按右鍵選擇 `選項` 可取消 `Dark Theme` 改使用 `Light Theme`
 
 <img width="469" src="docs/light_theme_1.png">
 <img width="800" src="docs/light_theme_2.png">
+
+## Export and Import Scripts
+
+對外掛小圖示按右鍵選擇 `Export Scripts` 會將目前所有 Scripts 下載為 `scripts.json`，也可將 `scripts.json` 檔案 Drag 進 XSS 開啟的視窗介面或透過 `選項` 功能 import scripts 便能匯入 Scripts 紀錄。
+
+## Options
+
+<img width="469" src="docs/options.png">
 
 ## Tip
 

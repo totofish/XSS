@@ -5,11 +5,11 @@ import React, {
   FC, useCallback, useMemo, useLayoutEffect, useRef,
 } from 'react';
 import styled from 'styled-components';
-import { Base64 } from 'js-base64';
 import { useDropzone } from 'react-dropzone';
 import {
   DragDropContext, Droppable, Draggable, DropResult,
 } from 'react-beautiful-dnd';
+import fileHelper from '../utility/fileHelper';
 import ScriptItem from './ScriptItem';
 import Stage from '../styled/Stage';
 import { IScriptItem } from '../../types';
@@ -85,17 +85,9 @@ const List: FC<ListProps> = ({
     };
   }, [stageEl, scrollTop, setListScrollTop]);
 
-  const handleDrop = useCallback((acceptedFiles: Array<File>) => {
-    const file = acceptedFiles[0];
-    if (file && /.json$/i.test(file.name)) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        if (typeof reader.result !== 'string') return;
-        const importData = Base64.decode(reader.result.replace('data:application/json;base64,', ''));
-        onImportScripts(JSON.parse(importData));
-      };
-      reader.readAsDataURL(file);
-    }
+  const handleDrop = useCallback(async (acceptedFiles: Array<File>) => {
+    const data = await fileHelper<Array<IScriptItem>>(acceptedFiles);
+    onImportScripts(data);
   }, [onImportScripts]);
 
   const { getRootProps, isDragActive } = useDropzone({ onDrop: handleDrop });
@@ -110,7 +102,6 @@ const List: FC<ListProps> = ({
 
   const renderDropMask = useMemo(() => {
     if (!isDragActive) return <></>;
-
     return (
       <DropMask>
         <div className="drop-mask-line">
@@ -169,7 +160,7 @@ const List: FC<ListProps> = ({
         </Droppable>
       </DragDropContext>
       <AddScriptItemBox key="add" onClick={onAdd}>
-        <img alt="" src="../imgs/add.svg" />
+        <img alt="add" src="../imgs/add.svg" />
       </AddScriptItemBox>
       { renderDropMask }
     </Stage>

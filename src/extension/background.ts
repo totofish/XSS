@@ -89,3 +89,13 @@ chrome.contextMenus.onClicked.addListener((info) => {
     exportScripts();
   }
 });
+
+chrome.runtime.onMessage.addListener((event: { type: MenuItemId; }, sender, sendResponse) => {
+  switch (event.type) {
+    case MenuItemId.EXPORT_SCRIPTS:
+      exportScripts();
+      sendResponse('ok');
+      break;
+    default:
+  }
+});
